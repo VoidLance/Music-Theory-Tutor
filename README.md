@@ -124,25 +124,31 @@ If you want to avoid the activation step entirely, you can call the venv Python 
 ./.venv/bin/python -m pip install -e .
 ```
 
-After installation, add the command to your shell so you can call it as `tonal`:
+After installation, add the command to your shell so you can call it as `tonal`.
 
-In fish, a simple alias is the least invasive option:
+First, verify that the entry point was actually created in the virtual environment:
+
+```bash
+ls .venv/bin/tonal
+```
+
+If that file exists, then in fish a simple alias is the least invasive option:
 
 ```fish
-alias tonal "$HOME/Music-Theory-Tutor/.venv/bin/tonal"
+alias tonal "$PWD/.venv/bin/tonal"
 ```
 
 To make that alias permanent:
 
 ```fish
-echo 'alias tonal "$HOME/Music-Theory-Tutor/.venv/bin/tonal"' >> ~/.config/fish/config.fish
+echo 'alias tonal "$PWD/.venv/bin/tonal"' >> ~/.config/fish/config.fish
 ```
 
 Or, if you prefer to make the executable available on your `PATH`:
 
 ```fish
 mkdir -p ~/.local/bin
-ln -sf "$HOME/Music-Theory-Tutor/.venv/bin/tonal" ~/.local/bin/tonal
+ln -sf "$PWD/.venv/bin/tonal" ~/.local/bin/tonal
 set -gx PATH $HOME/.local/bin $PATH
 ```
 
