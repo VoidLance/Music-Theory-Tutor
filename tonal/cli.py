@@ -4,6 +4,7 @@ import sys
 # It keeps the menu system separate from the music-theory logic, which makes it easier to keep extending the project without crowding everything into one file.
 
 from .data import (
+    circle_of_fifths,
     flat_keys,
     flat_order,
     keySignatureMap,
@@ -25,6 +26,8 @@ FUNCTIONS = {
     "flat_keys": flat_keys,
     "minor_keys": minor_keys,
     "keys": keys,
+    "circle": circle_of_fifths,
+    "circle_of_fifths": circle_of_fifths,
     "key": key_signature,
     "key_signature": key_signature,
     "mnemonic": mnemonic,
@@ -45,6 +48,8 @@ def show_help():
         "sharp_keys",
         "flat_keys",
         "minor_keys",
+        "circle",
+        "circle_of_fifths",
         "key <name>",
         "mnemonic <sharp|flat>",
         "quiz",

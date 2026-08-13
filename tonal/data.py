@@ -13,10 +13,12 @@ mnemonicSharps = ["Father", "Charles", "Goes", "Down", "And", "Ends", "Battle"]
 orderFlats = ["B", "E", "A", "D", "G", "C", "F"]
 mnemonicFlats = ["Battle", "Ends", "And", "Down", "Goes", "Charles'", "Father"]
 
-# Setup key order array
-sharpKeys = ["C maj (0)", "G maj (1)", "D maj (2)", "A maj (3)", "E maj (4)", "B major (5)", "F# maj (6)", "C# maj (7)"]
-flatKeys = ["C maj (0)", "F maj (1)", "B♭ maj (2)", "E♭ maj (3)", "A♭ maj (4)", "D♭ maj (5)", "G♭ maj (6)", "C♭ maj (7)"]
-minorKeys = ["A min (0)", "E min (1)", "B min (2)", "F# min (3)", "C# min (4)", "G# min (5)", "D# min (6)", "A# min (7)", "D min (1)", "G min (2)", "C min (3)", "F min (4)", "B♭ min (5)", "E♭ min (6)", "A♭ min (7)"]
+# Setup key order array.
+# In the usual practical teaching sequence, the standard circle stops at 6 sharps / 6 flats,
+# because the 7-sharp and 7-flat keys are enharmonic duplicates of C# and C♭ and are not typically listed in beginner key charts.
+sharpKeys = ["C maj (0)", "G maj (1)", "D maj (2)", "A maj (3)", "E maj (4)", "B major (5)", "F# maj (6)"]
+flatKeys = ["C maj (0)", "F maj (1)", "B♭ maj (2)", "E♭ maj (3)", "A♭ maj (4)", "D♭ maj (5)", "G♭ maj (6)"]
+minorKeys = ["A min (0)", "E min (1)", "B min (2)", "F# min (3)", "C# min (4)", "G# min (5)", "D# min (6)", "D min (1)", "G min (2)", "C min (3)", "F min (4)", "B♭ min (5)", "E♭ min (6)"]
 
 # Setup major key signature map so a specific key can be selected by name
 keySignatureMap = {
@@ -83,6 +85,65 @@ def keys():
     sharp_keys()
     flat_keys()
     minor_keys()
+
+# Create a terminal-friendly guide to the circle of fifths.
+# It explains how to build the pattern, how to read it, and how key relationships are shown in the circle.
+def circle_of_fifths():
+    print("Circle of Fifths")
+    print("================")
+    print("A circle of fifths is a map of key relationships built by moving in perfect fifths.")
+    print("Clockwise, each step goes up a perfect fifth: C -> G -> D -> A -> E -> B -> F# -> C#")
+    print("Counterclockwise, each step goes down a perfect fifth (or up a perfect fourth): C -> F -> B♭ -> E♭ -> A♭ -> D♭ -> G♭ -> C♭")
+    print("")
+    print("A rough terminal-style layout looks like this:")
+    print("""
+                C
+            F       G
+         B♭            D
+       E♭                A
+        A♭              E
+           D♭         B
+               G♭/F#
+""")
+    print("\nThe flat side is the mirror image of the sharp side. The flats belong on the flat-key names:")
+    print("F, B♭, E♭, A♭, D♭, G♭, C♭")
+    print("That is why the flat circle moves from C to F to B♭ to E♭ to A♭ to D♭ to G♭ to C♭.")
+    print("The sharp side uses the equivalent sharp spellings on the other side of the same ring, such as F# instead of G♭, and C# instead of D♭.")
+    print("This is the same pitch relationship expressed in a different spelling, depending on whether you are travelling the sharp side or the flat side.")
+    print("\nThis is only a simplified version of the circle. The idea is that each move clockwise adds one sharp,")
+    print("and each move counterclockwise adds one flat.")
+    print("")
+    print("How to draw it yourself:")
+    print("1. Start at C. It has 0 sharps and 0 flats.")
+    print("2. Move clockwise by a perfect fifth: C to G, then D, A, E, B, F#, C#.")
+    print("3. Each step adds one sharp to the key signature.")
+    print("4. Move counterclockwise from C: C to F, B♭, E♭, A♭, D♭, G♭, C♭.")
+    print("5. Each step adds one flat to the key signature.")
+    print("")
+    print("How to use it:")
+    print("- Closely related keys are next to each other on the circle.")
+    print("- Moving one step clockwise changes the key by one sharp.")
+    print("- Moving one step counterclockwise changes the key by one flat.")
+    print("- A key and its relative minor sit next to each other in the same 'spoke' of the wheel.")
+    print("- The relative major is the major key that shares the same key signature as a minor key.")
+    print("  Example: C major is related to A minor, G major to E minor, F major to D minor.")
+    print("")
+    print("Relative key relationships:")
+    print("C major  <-> A minor")
+    print("G major  <-> E minor")
+    print("D major  <-> B minor")
+    print("A major  <-> F# minor")
+    print("F major  <-> D minor")
+    print("B♭ major <-> G minor")
+    print("E♭ major <-> C minor")
+    print("A♭ major <-> F minor")
+    print("")
+    print("A simple memory rule:")
+    print("- clockwise = sharp side")
+    print("- counterclockwise = flat side")
+    print("- the circle shows how keys are connected by fifths, not just by name")
+    print("- the closer two keys are on the circle, the more they share notes and feel")
+    print("")
 
 # Create function to list the minor keys in order of accidentals
 # This is where the learner starts to bridge the gap between major keys and minor keys, and it helps explain why the relatives match.
@@ -178,7 +239,7 @@ def key_signature(key_name: str):
 
         if normalized_key not in relative_major_map:
             print(f"Unknown minor key: {key_name}")
-            print("Try one of:", ", ".join(sorted(minorKeySignatureMap.keys())))
+            print("Try one of:", ", ".join(sorted({key for key in minorKeySignatureMap if key in {"A", "E", "B", "F#", "C#", "G#", "D#", "D", "G", "C", "F", "B♭", "E♭"}})))
             return
 
         relative_major = relative_major_map[normalized_key]
@@ -208,7 +269,7 @@ def key_signature(key_name: str):
 
     if normalized_key not in keySignatureMap:
         print(f"Unknown key: {key_name}")
-        print("Try one of:", ", ".join(sorted(keySignatureMap.keys())))
+        print("Try one of:", ", ".join(sorted({key for key in keySignatureMap if key in {"C", "G", "D", "A", "E", "B", "F#", "F", "B♭", "E♭", "A♭", "D♭", "G♭"}})))
         return
 
     key_details = keySignatureMap[normalized_key]
@@ -255,6 +316,6 @@ def mnemonic(order_type: str):
 __all__ = [
     "orderSharps", "mnemonicSharps", "orderFlats", "mnemonicFlats",
     "sharpKeys", "flatKeys", "minorKeys", "keySignatureMap", "minorKeySignatureMap",
-    "sharp_order", "flat_order", "sharp_keys", "flat_keys", "keys", "minor_keys",
+    "sharp_order", "flat_order", "sharp_keys", "flat_keys", "keys", "circle_of_fifths", "minor_keys",
     "natural_minor_scale", "normalize_key_name", "key_signature", "mnemonic"
 ]
