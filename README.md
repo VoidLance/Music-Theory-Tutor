@@ -1,4 +1,4 @@
-# Tonal
+# Musor
 
 Quick start for most Linux/macOS users:
 
@@ -13,10 +13,10 @@ python -m pip install -e .
 Then run:
 
 ```bash
-tonal quiz
+musor quiz
 ```
 
-Tonal is a terminal-based music theory learning app built for practical understanding, not just reference lookup.
+Musor is a terminal-based music theory learning app built for practical understanding, not just reference lookup.
 
 It began with key signatures because they are one of the most important foundations in music study, but it has grown into a wider tutor for learning intervals, scales, chords, modes, transposition, fretboard navigation, and beginner-friendly instrument study.
 
@@ -110,7 +110,7 @@ python main.py keys
 
 ## Install as a shell command
 
-On Arch-based systems such as CachyOS, `python3 -m pip install --user -e .` often fails because the system Python is in an externally managed environment. The most reliable way to install this project as a normal shell command is through `pipx`, which creates its own virtual environment and exposes the `tonal` entry point without touching the system Python.
+On Arch-based systems such as CachyOS, `python3 -m pip install --user -e .` often fails because the system Python is in an externally managed environment. The most reliable way to install this project as a normal shell command is through `pipx`, which creates its own virtual environment and exposes the `musor` entry point without touching the system Python.
 
 If the repo is already present locally, skip the `git clone` step and change into the actual project directory:
 
@@ -143,34 +143,34 @@ pipx install .
 After installation, remove any stale alias that still points to the old broken path before testing:
 
 ```fish
-functions -e tonal
+functions -e musor
 ```
 
 Then add the correct alias for the current install:
 
 ```fish
-alias tonal /home/$(whoami)/.local/bin/tonal
+alias musor "$HOME/.local/bin/musor"
 ```
 
 If you installed via `pipx`, this is the correct alias for most users on Linux and macOS. If you installed in a project-local virtual environment instead, use:
 
 ```fish
-alias tonal "$PWD/Music-Theory-Tutor/.venv/bin/tonal"
+alias musor "$PWD/Music-Theory-Tutor/.venv/bin/musor"
 ```
 
 Then test:
 
 ```bash
-tonal keys
-tonal key Dm
-tonal key F
-tonal mnemonic sharp
-tonal scale G
-tonal chord G
-tonal modes
-tonal bassfret
-tonal cello
-tonal quiz
+musor keys
+musor key Dm
+musor key F
+musor mnemonic sharp
+musor scale G
+musor chord G
+musor modes
+musor bassfret
+musor cello
+musor quiz
 ```
 
 If you prefer not to use `pipx`, you can still install in a local virtual environment and call the script from that environment:
@@ -188,18 +188,18 @@ In fish, use:
 source ./Music-Theory-Tutor/.venv/bin/activate.fish
 ```
 
-To make the command available as `tonal` from a project-local venv, add:
+To make the command available as `musor` from a project-local venv, add:
 
 ```fish
-functions -e tonal
-alias tonal "$PWD/Music-Theory-Tutor/.venv/bin/tonal"
+functions -e musor
+alias musor "$PWD/Music-Theory-Tutor/.venv/bin/musor"
 ```
 
 To make the alias permanent in fish:
 
 ```fish
-echo 'functions -e tonal' >> ~/.config/fish/config.fish
-echo 'alias tonal "$HOME/Music-Theory-Tutor/.venv/bin/tonal"' >> ~/.config/fish/config.fish
+echo 'functions -e musor' >> ~/.config/fish/config.fish
+echo 'alias musor "$HOME/Music-Theory-Tutor/.venv/bin/musor"' >> ~/.config/fish/config.fish
 ```
 
 Then reload your shell and run commands from that environment.
@@ -207,31 +207,31 @@ Then reload your shell and run commands from that environment.
 ## Example usage
 
 ```bash
-tonal sharp_order
-tonal flat_order
-tonal mnemonic sharp
-tonal key G
-tonal minor_keys
-tonal scale C
-tonal chord F
-tonal circle_of_fifths
-tonal transposition
-tonal bassfret money
-tonal bassfret intervals
-tonal cello
-tonal quiz
+musor sharp_order
+musor flat_order
+musor mnemonic sharp
+musor key G
+musor minor_keys
+musor scale C
+musor chord F
+musor circle_of_fifths
+musor transposition
+musor bassfret money
+musor bassfret intervals
+musor cello
+musor quiz
 ```
 
 ## Quick reference for the main learning areas
 
-- Keys and signatures: `tonal keys`, `tonal key G`, `tonal mnemonic sharp`
-- Scales and modes: `tonal scale G`, `tonal modes`, `tonal modes C`
-- Chords: `tonal chord G`
-- Circle of fifths: `tonal circle_of_fifths`
-- Transposition: `tonal transposition`, `tonal transpose C G`
-- Bass fretboard: `tonal bassfret`, `tonal bassfret money`, `tonal bassfret intervals`
-- Cello: `tonal cello`
-- Quizzes: `tonal quiz`
+- Keys and signatures: `musor keys`, `musor key G`, `musor mnemonic sharp`
+- Scales and modes: `musor scale G`, `musor modes`, `musor modes C`
+- Chords: `musor chord G`
+- Circle of fifths: `musor circle_of_fifths`
+- Transposition: `musor transposition`, `musor transpose C G`
+- Bass fretboard: `musor bassfret`, `musor bassfret money`, `musor bassfret intervals`
+- Cello: `musor cello`
+- Quizzes: `musor quiz`
 
 ## Project structure
 
@@ -240,7 +240,7 @@ tonal quiz
 ├── README.md
 ├── main.py
 ├── pyproject.toml
-└── tonal/
+└── musor/
     ├── __init__.py
     ├── cli.py
     ├── data.py

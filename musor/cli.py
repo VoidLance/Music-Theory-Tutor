@@ -82,8 +82,8 @@ FUNCTIONS = {
 # Show a quick help menu for the terminal user
 # This keeps the app easy to use from the shell while also making it look more like a proper small CLI app.
 def show_help():
-    print("Tonal")
-    print("Usage: tonal <command> [arguments]")
+    print("Musor")
+    print("Usage: musor <command> [arguments]")
     print("")
     print("Commands:")
     for name in [
@@ -121,15 +121,15 @@ def show_help():
         print(f"  - {name}")
     print("")
     print("Examples:")
-    print("  tonal keys")
-    print("  tonal key Dm")
-    print("  tonal mnemonic sharp")
-    print("  tonal quiz")
+    print("  musor keys")
+    print("  musor key Dm")
+    print("  musor mnemonic sharp")
+    print("  musor quiz")
 
 
 def show_bassfret_help():
     print("bassfret")
-    print("Usage: tonal bassfret [money|intervals|scale <name>]")
+    print("Usage: musor bassfret [money|intervals|scale <name>]")
     print("")
     print("Available arguments:")
     for name in [
@@ -142,11 +142,11 @@ def show_bassfret_help():
         print(f"  - {name}")
     print("")
     print("Examples:")
-    print("  tonal bassfret")
-    print("  tonal bassfret money")
-    print("  tonal bassfret intervals")
-    print("  tonal bassfret scale G mixolydian")
-    print("  tonal bassfret compare")
+    print("  musor bassfret")
+    print("  musor bassfret money")
+    print("  musor bassfret intervals")
+    print("  musor bassfret scale G mixolydian")
+    print("  musor bassfret compare")
 
 # Setup input argument function
 # The user can pass a function name and any extra arguments, and the app dispatches to the right piece of logic.

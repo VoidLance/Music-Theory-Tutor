@@ -1,4 +1,4 @@
-"""Tonal CLI."""
+"""Musor CLI."""
 
 from .cli import FUNCTIONS, main
 
