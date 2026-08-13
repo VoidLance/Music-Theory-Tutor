@@ -1,43 +1,30 @@
 # Tonal
 
-Tonal is a terminal-based music theory learning app built around a much broader purpose than a simple key-signature lookup tool.
+Tonal is a terminal-based music theory learning app built for practical understanding, not just reference lookup.
 
-It began with key signatures because they are one of the most useful foundations in music study, but the real intention is to grow this into a wider music theory tutor that helps a learner understand how music works in a practical and memorable way. The app is designed to be approachable, fast to use, and easy to expand as the project develops.
+It began with key signatures because they are one of the most important foundations in music study, but it has grown into a wider tutor for learning intervals, scales, chords, modes, transposition, fretboard navigation, and beginner-friendly instrument study.
 
-## The real purpose
+## What the app covers
 
-This is not just a reference app for sharps, flats, and key signatures. The actual goal is to create a music theory companion that helps with understanding and recall across a much wider range of topics.
+The project now includes a practical mix of theory and teaching tools:
 
-At the moment, the project already covers the fundamentals:
-- the order of sharps and flats
-- mnemonics for remembering those patterns
-- major and minor key signatures
-- relative major/minor relationships
-- natural minor scales
-- a simple quiz mode
+- key signatures and related mnemonics
+- major and minor keys
+- scales and scale-building explanations
+- chords and triads
+- modes and modal feel
+- circle of fifths and key relationships
+- transposition and interval-based thinking
+- bass fretboard guidance and scale study
+- cello guidance for beginner home position and staff reading
+- composition and musical analysis guides
+- quizzes for each topic and a combined quiz
 
-But this is only the first layer. The longer-term direction is to turn this into a broader music theory tool for learning, revision, and practical application, especially in areas relevant to bass guitar and cello study.
-
-That future direction includes topics such as:
-- intervals
-- scale patterns
-- chord construction
-- tonal relationships
-- key feel and practical application
-- instrument-focused study habits for bass and cello players
-
-## Why this project exists
-
-This project serves two roles at once:
-
-1. It is a useful learning aid for music theory, especially for beginners who need quick, clear, and repeatable reference material.
-2. It is also a programming portfolio project, designed to show clean Python structure, CLI design, and a maintainable project layout that can grow over time.
-
-The code is intentionally kept modular so the app can expand naturally without becoming a single giant script.
+This is designed to help a learner understand how music works in a practical, memorable way rather than just memorising isolated facts.
 
 ## Download from GitHub and run with Python
 
-If you want to use the project without installing it system-wide, clone the repository and run it directly from the source folder.
+If you want to use the project without installing it system-wide, clone the repository and run it from source.
 
 ```bash
 git clone https://github.com/VoidLance/Music-Theory-Tutor.git
@@ -45,19 +32,24 @@ cd Music-Theory-Tutor
 python3 main.py keys
 ```
 
-This is the simplest option if you just want to try the app or work on the project locally.
+This is the simplest option if you want to try the app locally or work on the project without a global install.
 
-You can also run other commands directly from the repository root:
+You can run other commands directly from the repository root:
 
 ```bash
 python3 main.py sharp_order
 python3 main.py flat_order
 python3 main.py mnemonic sharp
 python3 main.py key Dm
+python3 main.py scale G
+python3 main.py chord G
+python3 main.py modes
+python3 main.py bassfret
+python3 main.py cello
 python3 main.py quiz
 ```
 
-If you prefer to keep the project in a virtual environment, you can do that too:
+If you prefer to keep the project in a virtual environment:
 
 ```bash
 git clone https://github.com/VoidLance/Music-Theory-Tutor.git
@@ -69,7 +61,7 @@ python main.py keys
 
 ## Install to your PATH and run as a command
 
-If you want to use the app as a normal shell command such as `tonal keys`, install it in editable mode and add the Python scripts directory to your PATH.
+If you want to use the app as a normal shell command such as `tonal keys`, install it in editable mode and make sure your user scripts directory is on PATH.
 
 ```bash
 git clone https://github.com/VoidLance/Music-Theory-Tutor.git
@@ -77,15 +69,13 @@ cd Music-Theory-Tutor
 python3 -m pip install --user -e .
 ```
 
-After installation, make sure your user scripts directory is available on PATH.
-
-On Linux/macOS, the usual location is:
+On Linux/macOS, the usual scripts directory is:
 
 ```bash
 export PATH="$HOME/.local/bin:$PATH"
 ```
 
-To make it permanent in bash:
+To make that permanent in bash:
 
 ```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
@@ -97,13 +87,18 @@ Or in fish:
 echo 'set -gx PATH $HOME/.local/bin $PATH' >> ~/.config/fish/config.fish
 ```
 
-Then restart your terminal or reload your shell config. After that, the app should be available as:
+Then restart your terminal or reload your shell. After that, the app should be available as:
 
 ```bash
 tonal keys
 tonal key Dm
 tonal key F
 tonal mnemonic sharp
+tonal scale G
+tonal chord G
+tonal modes
+tonal bassfret
+tonal cello
 tonal quiz
 ```
 
@@ -115,8 +110,26 @@ tonal flat_order
 tonal mnemonic sharp
 tonal key G
 tonal minor_keys
+tonal scale C
+tonal chord F
+tonal circle_of_fifths
+tonal transposition
+tonal bassfret money
+tonal bassfret intervals
+tonal cello
 tonal quiz
 ```
+
+## Quick reference for the main learning areas
+
+- Keys and signatures: `tonal keys`, `tonal key G`, `tonal mnemonic sharp`
+- Scales and modes: `tonal scale G`, `tonal modes`, `tonal modes C`
+- Chords: `tonal chord G`
+- Circle of fifths: `tonal circle_of_fifths`
+- Transposition: `tonal transposition`, `tonal transpose C G`
+- Bass fretboard: `tonal bassfret`, `tonal bassfret money`, `tonal bassfret intervals`
+- Cello: `tonal cello`
+- Quizzes: `tonal quiz`
 
 ## Project structure
 
@@ -132,4 +145,4 @@ tonal quiz
     └── quiz.py
 ```
 
-This separation keeps the project maintainable while leaving room for additional theory modules, practice tools, and instrument-focused features as the app grows.
+This layout keeps the project maintainable while leaving room for more lessons, practice tools, and instrument-focused guides as the app continues to grow.
