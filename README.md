@@ -43,7 +43,6 @@ This is designed to help a learner understand how music works in a practical, me
 If the project directory already exists or a previous install failed, remove the old folder and start from a fresh copy before trying again.
 
 ```bash
-cd ~/code
 rm -rf Music-Theory-Tutor
 git clone https://github.com/VoidLance/Music-Theory-Tutor.git
 cd Music-Theory-Tutor
@@ -116,15 +115,15 @@ On Arch-based systems such as CachyOS, `python3 -m pip install --user -e .` ofte
 If the repo is already present locally, skip the `git clone` step and change into the actual project directory:
 
 ```bash
-cd ~/code/Music-Theory-Tutor
+cd Music-Theory-Tutor
 ```
 
 If you want a clean reinstall, remove the old folder first:
 
 ```bash
-rm -rf ~/code/Music-Theory-Tutor
-git clone https://github.com/VoidLance/Music-Theory-Tutor.git ~/code/Music-Theory-Tutor
-cd ~/code/Music-Theory-Tutor
+rm -rf Music-Theory-Tutor
+git clone https://github.com/VoidLance/Music-Theory-Tutor.git
+cd Music-Theory-Tutor
 ```
 
 Then install it with `pipx`:
@@ -159,7 +158,7 @@ tonal quiz
 If you prefer not to use `pipx`, you can still install in a local virtual environment and call the script from that environment:
 
 ```bash
-cd ~/code/Music-Theory-Tutor
+cd Music-Theory-Tutor
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e .
@@ -168,7 +167,7 @@ python -m pip install -e .
 In fish, use:
 
 ```fish
-source ~/code/Music-Theory-Tutor/.venv/bin/activate.fish
+source ./Music-Theory-Tutor/.venv/bin/activate.fish
 ```
 
 Then run commands from that environment, or add an alias that points to the exact project path on disk, not a guessed one.
