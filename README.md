@@ -59,35 +59,51 @@ source .venv/bin/activate
 python main.py keys
 ```
 
-## Install to your PATH and run as a command
+## Install as a shell command
 
-If you want to use the app as a normal shell command such as `tonal keys`, install it in editable mode and make sure your user scripts directory is on PATH.
+On Arch-based systems such as CachyOS, `python3 -m pip install --user -e .` often fails because the system Python is in an externally managed environment. The safe approach is to create a virtual environment for the project, install the package there, and then expose the generated `tonal` command via your shell.
 
 ```bash
 git clone https://github.com/VoidLance/Music-Theory-Tutor.git
 cd Music-Theory-Tutor
-python3 -m pip install --user -e .
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e .
 ```
 
-On Linux/macOS, the usual scripts directory is:
+After that, you can either add the venv's `bin` directory to your `PATH` for the current shell:
 
 ```bash
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$PWD/.venv/bin:$PATH"
 ```
 
-To make that permanent in bash:
-
-```bash
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
-```
-
-Or in fish:
+Or create a simple alias so you can call the app as `tonal` without permanently changing your `PATH`:
 
 ```fish
-echo 'set -gx PATH $HOME/.local/bin $PATH' >> ~/.config/fish/config.fish
+alias tonal "$HOME/Music-Theory-Tutor/.venv/bin/tonal"
 ```
 
-Then restart your terminal or reload your shell. After that, the app should be available as:
+To make that alias permanent in fish:
+
+```fish
+echo 'alias tonal "$HOME/Music-Theory-Tutor/.venv/bin/tonal"' >> ~/.config/fish/config.fish
+```
+
+If you prefer to add the script to your `PATH` instead, a common option is:
+
+```fish
+mkdir -p ~/.local/bin
+ln -sf "$HOME/Music-Theory-Tutor/.venv/bin/tonal" ~/.local/bin/tonal
+set -gx PATH $HOME/.local/bin $PATH
+```
+
+Then reload your shell or run:
+
+```fish
+source ~/.config/fish/config.fish
+```
+
+After that, the app is available as:
 
 ```bash
 tonal keys
