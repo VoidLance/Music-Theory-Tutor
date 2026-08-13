@@ -35,51 +35,49 @@ This project serves two roles at once:
 
 The code is intentionally kept modular so the app can expand naturally without becoming a single giant script.
 
-## Installation
+## Download from GitHub and run with Python
 
-### Option 1: local usage with Python directly
-
-From the project folder:
+If you want to use the project without installing it system-wide, clone the repository and run it directly from the source folder.
 
 ```bash
-cd /path/to/Tonal
-python3 -m pip install --user -e .
-```
-
-This installs the project in editable mode so it can be run as a normal terminal command.
-
-### Option 2: run it directly from the repository
-
-```bash
-cd /path/to/Tonal
+git clone https://github.com/VoidLance/Music-Theory-Tutor.git
+cd Music-Theory-Tutor
 python3 main.py keys
 ```
 
-## Running it as a terminal app
+This is the simplest option if you just want to try the app or work on the project locally.
 
-After installing with the editable install above, the command is available as:
-
-```bash
-tonal keys
-```
-
-You can also look up a specific key:
+You can also run other commands directly from the repository root:
 
 ```bash
-tonal key Dm
-tonal key F
-tonal key A minor
+python3 main.py sharp_order
+python3 main.py flat_order
+python3 main.py mnemonic sharp
+python3 main.py key Dm
+python3 main.py quiz
 ```
 
-The quiz is available with:
+If you prefer to keep the project in a virtual environment, you can do that too:
 
 ```bash
-tonal quiz
+git clone https://github.com/VoidLance/Music-Theory-Tutor.git
+cd Music-Theory-Tutor
+python3 -m venv .venv
+source .venv/bin/activate
+python main.py keys
 ```
 
-## Adding it to your PATH
+## Install to your PATH and run as a command
 
-If the command is not found, add the user Python scripts directory to your PATH.
+If you want to use the app as a normal shell command such as `tonal keys`, install it in editable mode and add the Python scripts directory to your PATH.
+
+```bash
+git clone https://github.com/VoidLance/Music-Theory-Tutor.git
+cd Music-Theory-Tutor
+python3 -m pip install --user -e .
+```
+
+After installation, make sure your user scripts directory is available on PATH.
 
 On Linux/macOS, the usual location is:
 
@@ -87,19 +85,27 @@ On Linux/macOS, the usual location is:
 export PATH="$HOME/.local/bin:$PATH"
 ```
 
-To make that permanent, add the line above to your shell profile, for example:
+To make it permanent in bash:
 
 ```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 ```
 
-or for fish:
+Or in fish:
 
 ```fish
 echo 'set -gx PATH $HOME/.local/bin $PATH' >> ~/.config/fish/config.fish
 ```
 
-Then restart your terminal or reload your config.
+Then restart your terminal or reload your shell config. After that, the app should be available as:
+
+```bash
+tonal keys
+tonal key Dm
+tonal key F
+tonal mnemonic sharp
+tonal quiz
+```
 
 ## Example usage
 
@@ -119,7 +125,7 @@ tonal quiz
 ├── README.md
 ├── main.py
 ├── pyproject.toml
-└── theorytutor/
+└── tonal/
     ├── __init__.py
     ├── cli.py
     ├── data.py
