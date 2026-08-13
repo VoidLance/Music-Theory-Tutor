@@ -86,6 +86,220 @@ def keys():
     flat_keys()
     minor_keys()
 
+# Create a practical scale-builder so the user can turn any key signature into the actual notes of the scale.
+def scale_from_key(key_name: str):
+    text = key_name.strip()
+    normalized = normalize_key_name(text)
+    is_minor = "minor" in text.lower() or text.strip().lower().endswith("m") or text.strip().lower().endswith("min")
+
+    major_scale_map = {
+        "C": ["C", "D", "E", "F", "G", "A", "B", "C"],
+        "G": ["G", "A", "B", "C", "D", "E", "F#", "G"],
+        "D": ["D", "E", "F#", "G", "A", "B", "C#", "D"],
+        "A": ["A", "B", "C#", "D", "E", "F#", "G#", "A"],
+        "E": ["E", "F#", "G#", "A", "B", "C#", "D#", "E"],
+        "B": ["B", "C#", "D#", "E", "F#", "G#", "A#", "B"],
+        "F#": ["F#", "G#", "A#", "B", "C#", "D#", "E#", "F#"],
+        "C#": ["C#", "D#", "E#", "F#", "G#", "A#", "B#", "C#"],
+        "F": ["F", "G", "A", "B♭", "C", "D", "E", "F"],
+        "B♭": ["B♭", "C", "D", "E♭", "F", "G", "A", "B♭"],
+        "E♭": ["E♭", "F", "G", "A♭", "B♭", "C", "D", "E♭"],
+        "A♭": ["A♭", "B♭", "C", "D♭", "E♭", "F", "G", "A♭"],
+        "D♭": ["D♭", "E♭", "F", "G♭", "A♭", "B♭", "C", "D♭"],
+        "G♭": ["G♭", "A♭", "B♭", "C♭", "D♭", "E♭", "F", "G♭"],
+        "C♭": ["C♭", "D♭", "E♭", "F♭", "G♭", "A♭", "B♭", "C♭"],
+    }
+
+    minor_scale_map = {
+        "A": ["A", "B", "C", "D", "E", "F", "G", "A"],
+        "E": ["E", "F#", "G", "A", "B", "C", "D", "E"],
+        "B": ["B", "C#", "D", "E", "F#", "G", "A", "B"],
+        "F#": ["F#", "G#", "A", "B", "C#", "D", "E", "F#"],
+        "C#": ["C#", "D#", "E", "F#", "G#", "A", "B", "C#"],
+        "G#": ["G#", "A#", "B", "C#", "D#", "E", "F#", "G#"],
+        "D#": ["D#", "E#", "F#", "G#", "A#", "B", "C#", "D#"],
+        "A#": ["A#", "B#", "C#", "D#", "E#", "F#", "G#", "A#"],
+        "D": ["D", "E", "F", "G", "A", "B♭", "C", "D"],
+        "G": ["G", "A", "B♭", "C", "D", "E♭", "F", "G"],
+        "C": ["C", "D", "E♭", "F", "G", "A♭", "B♭", "C"],
+        "F": ["F", "G", "A♭", "B♭", "C", "D♭", "E♭", "F"],
+        "B♭": ["B♭", "C", "D♭", "E♭", "F", "G♭", "A♭", "B♭"],
+        "E♭": ["E♭", "F", "G♭", "A♭", "B♭", "C♭", "D♭", "E♭"],
+        "A♭": ["A♭", "B♭", "C♭", "D♭", "E♭", "F♭", "G♭", "A♭"],
+    }
+
+    scale_map = major_scale_map if not is_minor else minor_scale_map
+    key_name_clean = normalized
+
+    if key_name_clean not in scale_map:
+        print(f"Unknown key: {key_name}")
+        available = ", ".join(sorted(scale_map.keys()))
+        print("Try one of:", available)
+        return
+
+    scale = scale_map[key_name_clean]
+    scale_label = "minor" if is_minor else "major"
+    print(f"{key_name_clean} {scale_label}")
+    print("How to build it:")
+    print("1. Pick the root note of the key.")
+    print("2. Use the key signature to know which notes are altered.")
+    print("3. Move step by step through the scale, keeping the correct pattern of tones and semitones.")
+    if not is_minor:
+        print("4. For a major scale, the formula is: tone, tone, semitone, tone, tone, tone, semitone.")
+        print("5. Apply that pattern to the root note and keep the accidentals required by the key.")
+    else:
+        print("4. For natural minor, the formula is: tone, semitone, tone, tone, semitone, tone, tone.")
+        print("5. Use the relative major to identify the same key signature, then build the minor pattern from the minor root.")
+    print(f"Scale: {' '.join(scale)}")
+    print("Example: G major uses F# because the key signature contains one sharp, so the scale is G A B C D E F# G.")
+
+# Generic scales guide.
+def scales_overview():
+    print("Scales")
+    print("=====")
+    print("A scale is a sequence of notes built from a key in order.")
+    print("To build a scale, start with the key note and then follow the scale pattern.")
+    print("For a major scale, the formula is: tone, tone, semitone, tone, tone, tone, semitone.")
+    print("For a natural minor scale, the formula is: tone, semitone, tone, tone, semitone, tone, tone.")
+    print("Before you build the notes, check the key signature so you know which notes are sharp or flat.")
+    print("Example: G major has one sharp, so the scale is G A B C D E F# G.")
+    print("Example: A minor has no sharps or flats, so the natural minor scale is A B C D E F G A.")
+
+# Create a function to teach how to build a triad chord from a major key.
+def chord_from_key(key_name: str):
+    normalized = normalize_key_name(key_name)
+    major_scale_map = {
+        "C": ["C", "D", "E", "F", "G", "A", "B"],
+        "G": ["G", "A", "B", "C", "D", "E", "F#"],
+        "D": ["D", "E", "F#", "G", "A", "B", "C#"],
+        "A": ["A", "B", "C#", "D", "E", "F#", "G#"],
+        "E": ["E", "F#", "G#", "A", "B", "C#", "D#"],
+        "B": ["B", "C#", "D#", "E", "F#", "G#", "A#"],
+        "F#": ["F#", "G#", "A#", "B", "C#", "D#", "E#"],
+        "F": ["F", "G", "A", "B♭", "C", "D", "E"],
+        "B♭": ["B♭", "C", "D", "E♭", "F", "G", "A"],
+        "E♭": ["E♭", "F", "G", "A♭", "B♭", "C", "D"],
+        "A♭": ["A♭", "B♭", "C", "D♭", "E♭", "F", "G"],
+        "D♭": ["D♭", "E♭", "F", "G♭", "A♭", "B♭", "C"],
+        "G♭": ["G♭", "A♭", "B♭", "C♭", "D♭", "E♭", "F"],
+    }
+
+    if normalized not in major_scale_map:
+        print(f"Unknown key: {key_name}")
+        return
+
+    scale = major_scale_map[normalized]
+    root = scale[0]
+    third = scale[2]
+    fifth = scale[4]
+    chord = [root, third, fifth]
+
+    print(f"{normalized} major")
+    print("How to build it:")
+    print("1. Use the major scale for the key.")
+    print("2. Pick the 1st, 3rd, and 5th notes of that scale.")
+    print("3. Stack them together to make a triad.")
+    print(f"Scale in {normalized} major: {' '.join(scale)}")
+    print(f"1st = {root}")
+    print(f"3rd = {third}")
+    print(f"5th = {fifth}")
+    print(f"Chord: {' '.join(chord)}")
+    print(f"This gives the {root} major triad: {root} {third} {fifth}.")
+
+# Generic chords guide.
+def chords_overview():
+    print("Chords")
+    print("======")
+    print("A chord is built from notes in the scale.")
+    print("The simplest chord is a triad, built from the 1st, 3rd, and 5th degrees of the scale.")
+    print("For example, in G major the notes are G A B C D E F#. The 1st, 3rd, and 5th are G B D.")
+    print("So the G major triad is G B D.")
+    print("The quality of the triad changes depending on the 3rd: major, minor, or diminished.")
+
+# Create a feature to show the major modes built from a key.
+def modes_from_key(key_name: str):
+    normalized = normalize_key_name(key_name)
+    major_scale_map = {
+        "C": ["C", "D", "E", "F", "G", "A", "B"],
+        "G": ["G", "A", "B", "C", "D", "E", "F#"],
+        "D": ["D", "E", "F#", "G", "A", "B", "C#"],
+        "A": ["A", "B", "C#", "D", "E", "F#", "G#"],
+        "E": ["E", "F#", "G#", "A", "B", "C#", "D#"],
+        "B": ["B", "C#", "D#", "E", "F#", "G#", "A#"],
+        "F#": ["F#", "G#", "A#", "B", "C#", "D#", "E#"],
+        "F": ["F", "G", "A", "B♭", "C", "D", "E"],
+        "B♭": ["B♭", "C", "D", "E♭", "F", "G", "A"],
+        "E♭": ["E♭", "F", "G", "A♭", "B♭", "C", "D"],
+        "A♭": ["A♭", "B♭", "C", "D♭", "E♭", "F", "G"],
+        "D♭": ["D♭", "E♭", "F", "G♭", "A♭", "B♭", "C"],
+        "G♭": ["G♭", "A♭", "B♭", "C♭", "D♭", "E♭", "F"],
+    }
+
+    if normalized not in major_scale_map:
+        print(f"Unknown key: {key_name}")
+        return
+
+    scale = major_scale_map[normalized]
+    mode_details = [
+        ("Ionian", "1st", "Major", "bright, stable, resolved"),
+        ("Dorian", "2nd", "Minor", "soulful, smooth, wistful"),
+        ("Phrygian", "3rd", "Minor", "dark, tense, exotic"),
+        ("Lydian", "4th", "Major", "airy, bright, dreamy"),
+        ("Mixolydian", "5th", "Major", "bluesy, relaxed, upbeat"),
+        ("Aeolian", "6th", "Minor", "melancholic, reflective, natural minor"),
+        ("Locrian", "7th", "Diminished", "tense, unstable, dark"),
+    ]
+    modes = []
+    for i in range(len(scale)):
+        rotated = scale[i:] + scale[:i]
+        name, degree, quality, feeling = mode_details[i]
+        modes.append((name, degree, quality, feeling, rotated))
+
+    print(f"Modes of {normalized} major")
+    print("How to build them:")
+    print("1. Start with the major scale in the key.")
+    print("2. Keep the same notes, but begin on a different scale degree.")
+    print("3. Each new starting note creates a different mode with a different tonal colour.")
+    print(f"Major scale: {' '.join(scale)}")
+    for name, degree, quality, feeling, notes in modes:
+        print(f"{name} ({quality} mode, starts on {degree} degree): {' '.join(notes)} — {feeling}")
+    print("Example: C major = C D E F G A B C. Rotate that pattern to build D Dorian, E Phrygian, F Lydian, G Mixolydian, A Aeolian, and B Locrian.")
+    print("These modes are not just different starting points; each one has a characteristic major/minor/diminished quality and a different emotional colour.")
+
+# Generic modes guide.
+def modes_overview():
+    print("Modes")
+    print("=====")
+    print("Modes are the same notes as a major scale, but they start on a different degree.")
+    print("Each mode keeps the same parent scale, yet it changes the tonal centre, quality, and emotional character.")
+    print("Take C major: C D E F G A B. If you start on D, you get D Dorian.")
+    print("If you start on E, you get E Phrygian.")
+    print("This is why the modes are all related to one parent scale while still feeling different.")
+    print("")
+    print("The seven modes and their qualities:")
+    print("- Ionian: Major mode, bright, stable, resolved")
+    print("- Dorian: Minor mode, soulful, smooth, wistful")
+    print("- Phrygian: Minor mode, dark, tense, exotic")
+    print("- Lydian: Major mode, airy, bright, dreamy")
+    print("- Mixolydian: Major mode, bluesy, relaxed, upbeat")
+    print("- Aeolian: Minor mode, melancholic, reflective, natural minor")
+    print("- Locrian: Diminished mode, tense, unstable, dark")
+    print("")
+    print("A quick way to remember them:")
+    print("- Major-sounding modes: Ionian, Lydian, Mixolydian")
+    print("- Minor-sounding modes: Dorian, Phrygian, Aeolian")
+    print("- Darkest, most tense mode: Locrian")
+
+# Generic scale/chord/mode entry pages for the app.
+def scales_page():
+    scales_overview()
+
+def chords_page():
+    chords_overview()
+
+def modes_page():
+    modes_overview()
+
 # Create a terminal-friendly guide to the circle of fifths.
 # It explains how to build the pattern, how to read it, and how key relationships are shown in the circle.
 def circle_of_fifths():
@@ -176,6 +390,113 @@ def natural_minor_scale(key_root: str):
         return minor_scale[key_root]
 
     return None
+
+# Create a function to teach how to build a triad chord from a major key.
+def chord_from_key(key_name: str):
+    normalized = normalize_key_name(key_name)
+    major_scale_map = {
+        "C": ["C", "D", "E", "F", "G", "A", "B"],
+        "G": ["G", "A", "B", "C", "D", "E", "F#"],
+        "D": ["D", "E", "F#", "G", "A", "B", "C#"],
+        "A": ["A", "B", "C#", "D", "E", "F#", "G#"],
+        "E": ["E", "F#", "G#", "A", "B", "C#", "D#"],
+        "B": ["B", "C#", "D#", "E", "F#", "G#", "A#"],
+        "F#": ["F#", "G#", "A#", "B", "C#", "D#", "E#"],
+        "F": ["F", "G", "A", "B♭", "C", "D", "E"],
+        "B♭": ["B♭", "C", "D", "E♭", "F", "G", "A"],
+        "E♭": ["E♭", "F", "G", "A♭", "B♭", "C", "D"],
+        "A♭": ["A♭", "B♭", "C", "D♭", "E♭", "F", "G"],
+        "D♭": ["D♭", "E♭", "F", "G♭", "A♭", "B♭", "C"],
+        "G♭": ["G♭", "A♭", "B♭", "C♭", "D♭", "E♭", "F"],
+    }
+
+    if normalized not in major_scale_map:
+        print(f"Unknown key: {key_name}")
+        return
+
+    scale = major_scale_map[normalized]
+    root = scale[0]
+    third = scale[2]
+    fifth = scale[4]
+    chord = [root, third, fifth]
+
+    print(f"{normalized} major")
+    print(f"To build a triad, stack the 1st, 3rd, and 5th notes of the scale.")
+    print(f"Scale in {normalized} major: {' '.join(scale)}")
+    print(f"1st = {root}")
+    print(f"3rd = {third}")
+    print(f"5th = {fifth}")
+    print(f"Chord: {' '.join(chord)}")
+    print(f"This gives the {root} major triad: {root} {third} {fifth}.")
+
+# Create a feature to show the major modes built from a key.
+def modes_from_key(key_name: str):
+    raw = key_name.strip()
+    normalized = normalize_key_name(raw)
+    explicit_minor = "minor" in raw.lower() or raw.lower().endswith("m") or "min" in raw.lower()
+    major_scale_map = {
+        "C": ["C", "D", "E", "F", "G", "A", "B"],
+        "G": ["G", "A", "B", "C", "D", "E", "F#"],
+        "D": ["D", "E", "F#", "G", "A", "B", "C#"],
+        "A": ["A", "B", "C#", "D", "E", "F#", "G#"],
+        "E": ["E", "F#", "G#", "A", "B", "C#", "D#"],
+        "B": ["B", "C#", "D#", "E", "F#", "G#", "A#"],
+        "F#": ["F#", "G#", "A#", "B", "C#", "D#", "E#"],
+        "F": ["F", "G", "A", "B♭", "C", "D", "E"],
+        "B♭": ["B♭", "C", "D", "E♭", "F", "G", "A"],
+        "E♭": ["E♭", "F", "G", "A♭", "B♭", "C", "D"],
+        "A♭": ["A♭", "B♭", "C", "D♭", "E♭", "F", "G"],
+        "D♭": ["D♭", "E♭", "F", "G♭", "A♭", "B♭", "C"],
+        "G♭": ["G♭", "A♭", "B♭", "C♭", "D♭", "E♭", "F"],
+    }
+    relative_major_map = {
+        "A": "C", "E": "G", "B": "D", "F#": "A", "C#": "E", "G#": "B", "D#": "F#", "A#": "C#",
+        "D": "F", "G": "B♭", "C": "E♭", "F": "A♭", "B♭": "D♭", "E♭": "G♭", "A♭": "C♭",
+    }
+
+    if explicit_minor:
+        print(f"Modes of {normalized} minor")
+        print(f"{normalized} minor is a minor-key request, so it is best understood through its relative major.")
+        if normalized not in relative_major_map:
+            print(f"The app does not currently support a direct mode build for {normalized} minor as a standalone key.")
+            print("For a minor key, find the relative major first and build the modes from that major scale instead.")
+            return
+        relative_major = relative_major_map[normalized]
+        scale = major_scale_map[relative_major]
+        print(f"Relative major: {relative_major} major")
+        print(f"Parent scale: {' '.join(scale)}")
+        print("Mode patterns are still taken from the same parent scale, but the tonal centre is minor in this request.")
+        print("This means the mode qualities and emotional colours are interpreted from the minor-key relationship, not from a major-key route.")
+        return
+
+    if normalized not in major_scale_map:
+        print(f"Unknown key: {key_name}")
+        return
+
+    scale = major_scale_map[normalized]
+    mode_details = [
+        ("Ionian", "1st", "Major", "bright, stable, resolved"),
+        ("Dorian", "2nd", "Minor", "soulful, smooth, wistful"),
+        ("Phrygian", "3rd", "Minor", "dark, tense, exotic"),
+        ("Lydian", "4th", "Major", "airy, bright, dreamy"),
+        ("Mixolydian", "5th", "Major", "bluesy, relaxed, upbeat"),
+        ("Aeolian", "6th", "Minor", "melancholic, reflective, natural minor"),
+        ("Locrian", "7th", "Diminished", "tense, unstable, dark"),
+    ]
+    modes = []
+    for i in range(len(scale)):
+        rotated = scale[i:] + scale[:i]
+        name, degree, quality, feeling = mode_details[i]
+        modes.append((name, degree, quality, feeling, rotated))
+
+    print(f"Modes of {normalized} major")
+    print("To build modes, start the scale on each degree of the major scale.")
+    print(f"Major scale: {' '.join(scale)}")
+    print("Each mode is the same notes, just starting on a different degree, and each one has a different tonal quality.")
+    for name, degree, quality, feeling, notes in modes:
+        print(f"{name} ({quality} mode, starts on {degree} degree): {' '.join(notes)} — {feeling}")
+    print("Example: C major = C D E F G A B C. Rotate that pattern to build D Dorian, E Phrygian, F Lydian, G Mixolydian, A Aeolian, and B Locrian.")
+    print("These modes are not just different starting points; major, minor, and diminished qualities change the feeling of the music.")
 
 # Create helper to accept equivalent key spellings everywhere the user may type them
 # This includes flat/sharp words, symbolic accidentals, commas, capitals, and spacing differences.
@@ -316,6 +637,7 @@ def mnemonic(order_type: str):
 __all__ = [
     "orderSharps", "mnemonicSharps", "orderFlats", "mnemonicFlats",
     "sharpKeys", "flatKeys", "minorKeys", "keySignatureMap", "minorKeySignatureMap",
-    "sharp_order", "flat_order", "sharp_keys", "flat_keys", "keys", "circle_of_fifths", "minor_keys",
-    "natural_minor_scale", "normalize_key_name", "key_signature", "mnemonic"
+    "sharp_order", "flat_order", "sharp_keys", "flat_keys", "keys", "scale_from_key", "scales_overview", "scales_page",
+    "chord_from_key", "chords_overview", "chords_page", "modes_from_key", "modes_overview", "modes_page",
+    "circle_of_fifths", "minor_keys", "natural_minor_scale", "normalize_key_name", "key_signature", "mnemonic"
 ]

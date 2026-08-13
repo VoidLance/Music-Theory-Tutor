@@ -4,6 +4,8 @@ import sys
 # It keeps the menu system separate from the music-theory logic, which makes it easier to keep extending the project without crowding everything into one file.
 
 from .data import (
+    chord_from_key,
+    chords_overview,
     circle_of_fifths,
     flat_keys,
     flat_order,
@@ -12,6 +14,10 @@ from .data import (
     keys,
     minor_keys,
     mnemonic,
+    modes_from_key,
+    modes_overview,
+    scale_from_key,
+    scales_overview,
     sharp_keys,
     sharp_order,
 )
@@ -28,6 +34,14 @@ FUNCTIONS = {
     "keys": keys,
     "circle": circle_of_fifths,
     "circle_of_fifths": circle_of_fifths,
+    "scales": scales_overview,
+    "scale": scale_from_key,
+    "scale_from_key": scale_from_key,
+    "chords": chords_overview,
+    "chord": chord_from_key,
+    "chord_from_key": chord_from_key,
+    "modes": modes_overview,
+    "modes_from_key": modes_from_key,
     "key": key_signature,
     "key_signature": key_signature,
     "mnemonic": mnemonic,
@@ -50,6 +64,12 @@ def show_help():
         "minor_keys",
         "circle",
         "circle_of_fifths",
+        "scales",
+        "scale <key>",
+        "chords",
+        "chord <key>",
+        "modes",
+        "modes <key>",
         "key <name>",
         "mnemonic <sharp|flat>",
         "quiz",
@@ -77,6 +97,42 @@ def main(func_name: str, *args):
         if not args:
             print("Please choose a key, for example: key E")
             print("Try one of:", ", ".join(sorted(keySignatureMap.keys())))
+            return
+        FUNCTIONS[func_name](" ".join(args))
+        return
+
+    if func_name in ["scale", "scale_from_key"]:
+        if not args:
+            print("Please choose a key, for example: scale G")
+            return
+        FUNCTIONS[func_name](" ".join(args))
+        return
+
+    if func_name in ["chord", "chord_from_key"]:
+        if not args:
+            print("Please choose a key, for example: chord G")
+            return
+        FUNCTIONS[func_name](" ".join(args))
+        return
+
+    if func_name == "chords":
+        FUNCTIONS[func_name]()
+        return
+
+    if func_name == "scales":
+        FUNCTIONS[func_name]()
+        return
+
+    if func_name == "modes":
+        if not args:
+            FUNCTIONS[func_name]()
+            return
+        FUNCTIONS["modes_from_key"](" ".join(args))
+        return
+
+    if func_name == "modes_from_key":
+        if not args:
+            print("Please choose a key, for example: modes C")
             return
         FUNCTIONS[func_name](" ".join(args))
         return
