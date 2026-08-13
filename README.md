@@ -16,6 +16,46 @@ Then run:
 musor quiz
 ```
 
+## Windows quick start (recommended for beginners)
+
+If you are on Windows and want the simplest setup, use this exact order:
+
+1. Install Python 3.11 or 3.12 from https://www.python.org/downloads/windows/
+   - Make sure the installer box for “Add Python to PATH” is checked.
+2. Install Git from https://git-scm.com/download/win
+3. Open PowerShell or Command Prompt.
+4. Run these commands:
+
+```powershell
+git clone https://github.com/VoidLance/Music-Theory-Tutor.git
+cd Music-Theory-Tutor
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -e .
+musor quiz
+```
+
+If PowerShell says script execution is blocked, run this once and then try the activation step again:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+
+If you prefer Command Prompt instead of PowerShell, this works too:
+
+```cmd
+git clone https://github.com/VoidLance/Music-Theory-Tutor.git
+cd Music-Theory-Tutor
+py -m venv .venv
+.venv\Scripts\activate.bat
+python -m pip install --upgrade pip
+python -m pip install -e .
+musor quiz
+```
+
+If the command `musor` is not found after install, close and reopen the terminal, then try again. Sometimes Windows needs a fresh terminal before the new entry point appears.
+
 Musor is a terminal-based music theory learning app built for practical understanding, not just reference lookup.
 
 It began with key signatures because they are one of the most important foundations in music study, but it has grown into a wider tutor for learning intervals, scales, chords, modes, transposition, fretboard navigation, and beginner-friendly instrument study.
