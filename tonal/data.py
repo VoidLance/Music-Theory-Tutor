@@ -300,6 +300,112 @@ def chords_page():
 def modes_page():
     modes_overview()
 
+# Practical composition and analysis guides.
+def riff_guide():
+    print("Riffs")
+    print("=====")
+    print("A riff is usually a short repeated pattern that gives a piece its identity.")
+    print("To build a riff, start with a simple rhythmic idea, then choose notes that fit the chord or key.")
+    print("Good riffs are usually easy to remember, repeat cleanly, and support the groove.")
+    print("Ask three questions: What chord is it over? What rhythm is it based on? What note or interval makes it memorable?")
+    print("A simple riff often uses repetition, a strong rhythmic accent, and a small range so it sits clearly in the groove.")
+    print("Example: on a G major chord, a riff might emphasise G, B, and D with a repeated rhythmic pattern that locks to the beat.")
+
+
+def bassline_guide():
+    print("Basslines")
+    print("=========")
+    print("A bassline should support the harmony and the groove at the same time.")
+    print("Its first job is to make the chord progression clear, and its second job is to give the music a pulse that people can feel.")
+    print("Start by identifying the harmonic rhythm: are the chords changing every bar, every half bar, or every beat?")
+    print("Then decide what the bass is meant to do. Is it driving the groove, outlining the root motion, or creating tension with passing notes?")
+    print("The basic building plan is simple:")
+    print("1. Start on the root or fifth of the chord on the strongest beats.")
+    print("2. Add the third when you want to make the chord quality obvious, especially when the harmony is moving quickly.")
+    print("3. Use passing notes between chord tones to create smoother motion, but keep the line easy to hear and follow.")
+    print("4. Keep the rhythm consistent with the drums; a bassline is strongest when it locks into the beat rather than fighting it.")
+    print("5. Treat the bassline like a phrase, not a random stack of notes: motif, repetition, variation, and final resolution all matter.")
+    print("")
+    print("Advanced bassline tips")
+    print("- Root notes keep the harmony grounded; fifths and octaves create stability without clutter.")
+    print("- A 3rd adds colour and tells the ear whether a chord is major or minor.")
+    print("- Suspended or passing notes can create motion, but if every note is a passing tone the line loses definition.")
+    print("- Use syncopation sparingly: a delayed accent can sound cool, but too much can blur the pulse.")
+    print("- Build a phrase with contrast. For example, one bar can place roots on beat 1 and 3, then the next bar can use a more active line with passing tones.")
+    print("- When a progression is repeated, change the rhythm or the order of notes slightly rather than reusing the exact same pattern every time.")
+    print("- In a bassline, leave room for the melody and harmony. The bass should add weight and direction, not compete with the upper parts.")
+    print("- If a line feels weak, test whether the issue is rhythmic placement, harmonic clarity, or lack of note-to-note motion.")
+    print("")
+    print("Walking basslines")
+    print("A walking bassline is a smooth line that keeps moving through the chord tones, usually one note per beat.")
+    print("It is often used in jazz, swing, and other styles where the bass creates a feeling of constant forward motion.")
+    print("How to build one:")
+    print("1. Choose the chord progression and decide how many beats each chord will take.")
+    print("2. Write one note per beat, often around a steady quarter-note pulse or a flowing eighth-note pattern.")
+    print("3. Move through the chord tones in order: root, 3rd, 5th, and 7th are common choices, with passing tones in between when needed.")
+    print("4. Keep the line stepwise when possible, so it feels like a continuous walk rather than a jumpy pattern.")
+    print("5. Aim for smooth voice-leading: choose notes that lead naturally into the next chord, not just random notes that happen to fit the key.")
+    print("6. Make the bassline support the harmonic movement. The listener should hear the chord changes without the line becoming chaotic.")
+    print("A simple walking line over C major can move like this: C - E - G - B | A - C - E - G | F - A - C - E | G - B - D - G")
+    print("This works because each note sits in the harmonic space of the chord, and the stepwise motion keeps the line moving.")
+    print("For a stronger walking line, pay attention to the line's contour: avoid too many large leaps unless they are part of a deliberate phrase, and make sure the line resolves naturally.")
+    print("The best walking basslines feel like a conversation between the harmony and the rhythm section: stable enough to anchor the tune, but active enough to keep the groove moving.")
+
+
+def melody_guide():
+    print("Melody")
+    print("======")
+    print("A melody should be memorable, singable, and shaped around the harmony.")
+    print("Start by choosing a scale or mode that matches the mood of the song. Then pick notes that outline the chord tones and the target note of the phrase.")
+    print("A melody usually works best when it has a clear contour: a rise, a peak, and a release.")
+    print("Use repetition for familiarity, and variety for interest. Long notes can feel stable, while shorter notes create motion.")
+    print("Good melodies often sit around the tonic, dominant, and leading tone, and they usually resolve with a sense of purpose.")
+
+
+def genre_analysis_guide():
+    print("Genre analysis")
+    print("==============")
+    print("To analyse a genre, listen for the things that create its identity: rhythm, harmony, scale colour, phrasing, and texture.")
+    print("Ask what makes it feel the way it does: is it a straight groove, a swung feel, a syncopated accent pattern, or a strong drone?")
+    print("Listen for the harmonic language: major, minor, modal, bluesy, or heavily functional.")
+    print("Check the rhythm and metre. A song built around a steady pulse, a walking bassline, or a punchy syncopated riff will feel very different.")
+    print("Look at the melodic material: are the melodies staying close to the pentatonic scale, rotating through modes, or leaning on chord tones and blue notes?")
+    print("Finally, identify the key question: what is the music trying to make you feel? Bright, stable, tense, soulful, dark, relaxed, or adventurous?")
+    print("The point is not just to name a genre, but to understand what musical decisions create that genre's characteristic sound.")
+    print("")
+    print("How to analyse sheet music by genre")
+    print("1. Start with the time signature and metre. 4/4, 3/4, 12/8, and compound metres immediately suggest different musical feel and phrase shape.")
+    print("2. Mark the accents. Ask where the downbeats fall, whether the music is driven by strong quarter-note pulses or by syncopation and off-beat emphasis.")
+    print("3. Look at the rhythmic cell. Short repeated patterns often define a style. For example, a repeated dotted rhythm or a repeated eighth-note figure can create a martial or fanfare feel.")
+    print("4. Study the harmonic rhythm. Does the harmony move every bar, every half bar, or only on important cadences? This quickly separates many styles.")
+    print("5. Check the scale or mode and identify any accidentals. Blues, folk, modal, and jazz writing all contain very different pitch colour.")
+    print("6. Identify the phrase shape. Does the melody stick to short repeated motives, or does it expand into long, singing lines with clear cadences?")
+    print("7. Look for genre clues in the patterns. Repeated broken-chord figures often suggest fanfares or ceremonial music, while walking bass support and ii-V-I motion suggest jazz.")
+    print("8. Pay attention to cadences and endings. A strong authentic cadence feels final, while a plagal or modal ending feels looser and more folk-like.")
+    print("")
+    print("Spotting the patterns that create a genre")
+    print("A good way to train your ear and eye is to look for recurring musical 'motifs' rather than memorising a whole piece.")
+    print("Ask: does this music repeat a rhythmic pattern? Is there a repeated bass motion? Is there a repeated interval or phrase shape? Do the pitches outline a set scale or a broken chord?")
+    print("If you can identify one or two repeated cells, you are already hearing the style of the piece.")
+    print("For example, a fanfare often uses repetition, strong accents, broad leaps, and a short, punchy rhythmic figure that feels ceremonial or heroic.")
+    print("A fanfare may also use a broken-chord pattern such as root-fifth-octave or a repeated rising idea that feels like a call to action.")
+    print("Try this exercise: take a sheet of music, circle the repeated rhythmic cells, then circle any motif that appears more than once. Once you track those, you can often tell what kind of piece it is.")
+    print("The old lesson you mentioned is a classic example: a page of fanfare pieces can be reduced to a few repeated pattern habits, and once you recognise those, you can make your own fanfare by building a short phrase from them.")
+    print("A beginner fanfare recipe is: choose a strong time signature, write a repeated accent pattern, use a broken-chord or arpeggio idea, then repeat it with slight variation and close with a clear cadence.")
+    print("This is how pattern recognition becomes composition: you are not copying a piece, you are learning the grammar of a style.")
+    print("")
+    print("Genre examples")
+    print("- Jazz: walking bass, swung rhythm, extended harmony, ii-V-I movement, strong improvisatory phrase shapes.")
+    print("- Blues: repeated phrases, dominant tension, blue notes, call-and-response, and a very clear emotional pull.")
+    print("- Rock: strong riff-based repetition, power-chord motion, clear tonic-dominant pull, and memorable hooks.")
+    print("- Classical and ceremonial music: balanced phrase lengths, sequence patterns, cadences, and repeated fanfare-like motives.")
+    print("- Folk and modal music: fewer harmonic changes, modal colour, repeated melodic cells, and strong connection to a local or dance-like pulse.")
+    print("The key idea is that each genre is not just a set of chords or scales; it is a set of patterns working together. Once you can spot those patterns on the page, you can start to understand the style and even write in it.")
+
+
+def walking_bassline_guide():
+    bassline_guide()
+
 # Create a terminal-friendly guide to the circle of fifths.
 # It explains how to build the pattern, how to read it, and how key relationships are shown in the circle.
 def circle_of_fifths():
@@ -647,5 +753,6 @@ __all__ = [
     "sharpKeys", "flatKeys", "minorKeys", "keySignatureMap", "minorKeySignatureMap",
     "sharp_order", "flat_order", "sharp_keys", "flat_keys", "keys", "scale_from_key", "scales_overview", "scales_page",
     "chord_from_key", "chords_overview", "chords_page", "modes_from_key", "modes_overview", "modes_page",
+    "riff_guide", "bassline_guide", "melody_guide", "genre_analysis_guide", "walking_bassline_guide",
     "circle_of_fifths", "minor_keys", "natural_minor_scale", "normalize_key_name", "key_signature", "mnemonic"
 ]

@@ -3,7 +3,18 @@ import unittest
 from contextlib import redirect_stdout
 
 from tonal.cli import FUNCTIONS
-from tonal.data import chord_from_key, modes_from_key, scales_overview, chords_overview, circle_of_fifths
+from tonal.data import (
+    chord_from_key,
+    modes_from_key,
+    scales_overview,
+    chords_overview,
+    circle_of_fifths,
+    riff_guide,
+    bassline_guide,
+    melody_guide,
+    genre_analysis_guide,
+    walking_bassline_guide,
+)
 from tonal.quiz import scale_quiz, chord_quiz, modes_quiz, combined_quiz
 
 
@@ -89,6 +100,24 @@ class ChordAndModesTest(unittest.TestCase):
         self.assertIn("tonal quality", output)
         self.assertIn("stable", output)
         self.assertIn("dramatic", output)
+
+    def test_practical_music_construction_guides_exist(self):
+        for guide in [riff_guide, bassline_guide, melody_guide, genre_analysis_guide, walking_bassline_guide]:
+            self.assertTrue(callable(guide))
+
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            bassline_guide()
+        output = buf.getvalue().lower()
+        self.assertIn("walking bassline", output)
+        self.assertIn("root", output)
+
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            genre_analysis_guide()
+        output = buf.getvalue().lower()
+        self.assertIn("genre", output)
+        self.assertIn("rhythm", output)
 
 
 if __name__ == "__main__":
