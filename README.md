@@ -1,5 +1,23 @@
 # Tonal
 
+Quick start for Arch/CachyOS users:
+
+```bash
+cd /mnt/1TB-HDD/Python
+rm -rf "Music Theory Tutor"
+git clone https://github.com/VoidLance/Music-Theory-Tutor.git "Music Theory Tutor"
+cd "Music Theory Tutor"
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e .
+```
+
+Then run:
+
+```bash
+tonal quiz
+```
+
 Tonal is a terminal-based music theory learning app built for practical understanding, not just reference lookup.
 
 It began with key signatures because they are one of the most important foundations in music study, but it has grown into a wider tutor for learning intervals, scales, chords, modes, transposition, fretboard navigation, and beginner-friendly instrument study.
@@ -21,6 +39,19 @@ The project now includes a practical mix of theory and teaching tools:
 - quizzes for each topic and a combined quiz
 
 This is designed to help a learner understand how music works in a practical, memorable way rather than just memorising isolated facts.
+
+## Clean reinstall / update from a fresh clone
+
+If the project directory already exists or a previous install failed, remove the old folder and start from a fresh copy before trying again.
+
+```bash
+cd /mnt/1TB-HDD/Python
+rm -rf "Music Theory Tutor"
+git clone https://github.com/VoidLance/Music-Theory-Tutor.git "Music Theory Tutor"
+cd "Music Theory Tutor"
+```
+
+This avoids the repeated `fatal: destination path ... already exists` error and ensures you are working in the actual project directory.
 
 ## Download from GitHub and run with Python
 
@@ -82,83 +113,36 @@ python main.py keys
 
 ## Install as a shell command
 
-On Arch-based systems such as CachyOS, `python3 -m pip install --user -e .` often fails because the system Python is in an externally managed environment. The safe approach is to create a virtual environment for the project, install the package there, and then expose the generated `tonal` command via your shell.
+On Arch-based systems such as CachyOS, `python3 -m pip install --user -e .` often fails because the system Python is in an externally managed environment. The most reliable way to install this project as a normal shell command is through `pipx`, which creates its own virtual environment and exposes the `tonal` entry point without touching the system Python.
 
-If the repo is already present locally, skip the `git clone` step and just change into the project directory:
-
-```bash
-cd Music-Theory-Tutor
-```
-
-If you want to reinstall or update from a fresh copy and the folder already exists, remove it and clone again:
+If the repo is already present locally, skip the `git clone` step and change into the actual project directory:
 
 ```bash
-rm -rf Music-Theory-Tutor
-git clone https://github.com/VoidLance/Music-Theory-Tutor.git
-cd Music-Theory-Tutor
+cd /path/to/Music-Theory-Tutor
 ```
 
-Then create the environment and install the project:
+If you want a clean reinstall, remove the old folder first:
 
 ```bash
-python3 -m venv .venv
+rm -rf /path/to/Music-Theory-Tutor
+git clone https://github.com/VoidLance/Music-Theory-Tutor.git /path/to/Music-Theory-Tutor
+cd /path/to/Music-Theory-Tutor
 ```
 
-In bash/zsh:
+Then install it with `pipx`:
 
 ```bash
-source .venv/bin/activate
-python -m pip install -e .
+sudo pacman -S python-pipx
+pipx install .
 ```
 
-In fish:
-
-```fish
-source .venv/bin/activate.fish
-python -m pip install -e .
-```
-
-If you want to avoid the activation step entirely, you can call the venv Python directly:
+If `pipx` is already installed, you can skip the `pacman` step and run just:
 
 ```bash
-./.venv/bin/python -m pip install -e .
+pipx install .
 ```
 
-After installation, add the command to your shell so you can call it as `tonal`.
-
-First, verify that the entry point was actually created in the virtual environment:
-
-```bash
-ls .venv/bin/tonal
-```
-
-If that file exists, then in fish a simple alias is the least invasive option:
-
-```fish
-alias tonal "$PWD/.venv/bin/tonal"
-```
-
-To make that alias permanent:
-
-```fish
-echo 'alias tonal "$PWD/.venv/bin/tonal"' >> ~/.config/fish/config.fish
-```
-
-Or, if you prefer to make the executable available on your `PATH`:
-
-```fish
-mkdir -p ~/.local/bin
-ln -sf "$PWD/.venv/bin/tonal" ~/.local/bin/tonal
-set -gx PATH $HOME/.local/bin $PATH
-```
-
-Then reload your shell or run:
-
-```fish
-source ~/.config/fish/config.fish
-```
-
-After that, the app is available as:
+After installation, the command should be available directly as:
 
 ```bash
 tonal keys
@@ -172,6 +156,23 @@ tonal bassfret
 tonal cello
 tonal quiz
 ```
+
+If you prefer not to use `pipx`, you can still install in a local virtual environment and call the script from that environment:
+
+```bash
+cd /path/to/Music-Theory-Tutor
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e .
+```
+
+In fish, use:
+
+```fish
+source /path/to/Music-Theory-Tutor/.venv/bin/activate.fish
+```
+
+Then run commands from that environment, or add an alias that points to the exact project path on disk, not a guessed one.
 
 ## Example usage
 
