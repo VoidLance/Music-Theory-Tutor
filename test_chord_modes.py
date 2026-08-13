@@ -3,7 +3,7 @@ import unittest
 from contextlib import redirect_stdout
 
 from tonal.cli import FUNCTIONS
-from tonal.data import chord_from_key, modes_from_key, scales_overview, chords_overview
+from tonal.data import chord_from_key, modes_from_key, scales_overview, chords_overview, circle_of_fifths
 from tonal.quiz import scale_quiz, chord_quiz, modes_quiz, combined_quiz
 
 
@@ -77,6 +77,18 @@ class ChordAndModesTest(unittest.TestCase):
     def test_topic_specific_and_combined_quiz_functions_exist(self):
         for quiz_fn in [scale_quiz, chord_quiz, modes_quiz, combined_quiz]:
             self.assertTrue(callable(quiz_fn))
+
+    def test_circle_relationships_explain_distance_and_quality(self):
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            circle_of_fifths()
+        output = buf.getvalue().lower()
+
+        self.assertIn("close relationship", output)
+        self.assertIn("distant relationship", output)
+        self.assertIn("tonal quality", output)
+        self.assertIn("stable", output)
+        self.assertIn("dramatic", output)
 
 
 if __name__ == "__main__":
