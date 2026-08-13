@@ -24,6 +24,8 @@ from .data import (
     scales_overview,
     sharp_keys,
     sharp_order,
+    transposition_guide,
+    transpose_key,
     walking_bassline_guide,
 )
 from .quiz import quiz
@@ -53,6 +55,9 @@ FUNCTIONS = {
     "genre": genre_analysis_guide,
     "genre_analysis": genre_analysis_guide,
     "walking_bassline": walking_bassline_guide,
+    "transposition": transposition_guide,
+    "transpose": transpose_key,
+    "transpose_key": transpose_key,
     "key": key_signature,
     "key_signature": key_signature,
     "mnemonic": mnemonic,
@@ -86,6 +91,8 @@ def show_help():
         "melody",
         "genre",
         "walking_bassline",
+        "transposition",
+        "transpose <source> <target>",
         "key <name>",
         "mnemonic <sharp|flat>",
         "quiz",
@@ -158,6 +165,16 @@ def main(func_name: str, *args):
             print("Please choose 'sharp' or 'flat'.")
             return
         FUNCTIONS[func_name](" ".join(args))
+        return
+
+    if func_name in ["transpose", "transpose_key"]:
+        if not args:
+            FUNCTIONS[func_name]()
+            return
+        if len(args) == 1:
+            FUNCTIONS[func_name](args[0])
+            return
+        FUNCTIONS[func_name](args[0], args[1])
         return
 
     if func_name == "quiz":

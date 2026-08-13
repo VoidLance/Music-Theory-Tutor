@@ -300,6 +300,167 @@ def chords_page():
 def modes_page():
     modes_overview()
 
+# Transposition helpers and guides.
+def _normalize_note_name(note: str):
+    return note.strip().replace("♯", "#").replace("♭", "b")
+
+
+def _prefer_flat_for_note(note: str):
+    normalized = _normalize_note_name(note)
+    if normalized in {"C", "D", "E", "F", "G", "A", "B"}:
+        return False
+    return normalized.endswith("b") and len(normalized) > 1
+
+
+def _note_to_pitch(note: str):
+    normalized = _normalize_note_name(note)
+    pitch_map = {
+        "C": 0, "C#": 1, "Db": 1, "D": 2, "D#": 3, "Eb": 3, "E": 4,
+        "F": 5, "F#": 6, "Gb": 6, "G": 7, "G#": 8, "Ab": 8, "A": 9,
+        "A#": 10, "Bb": 10, "B": 11, "Cb": 11, "B#": 0,
+    }
+    if normalized in pitch_map:
+        return pitch_map[normalized]
+
+    match = re.match(r"^([A-Ga-g])(#|b|##|bb)?$", normalized)
+    if not match:
+        return None
+
+    letter = match.group(1).upper()
+    accidental = match.group(2) or ""
+    base = {"C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A": 9, "B": 11}[letter]
+    accidental_value = accidental.count("#") - accidental.count("b")
+    return (base + accidental_value) % 12
+
+
+def _pitch_to_note(pitch: int, prefer_flat: bool = False):
+    sharp_names = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+    flat_names = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
+    choice = flat_names if prefer_flat else sharp_names
+    return choice[pitch % 12]
+
+
+def transpose_notes(notes, semitones: int):
+    if isinstance(notes, str):
+        notes = [notes]
+
+    transposed = []
+    shift = int(semitones) % 12
+    for note in notes:
+        pitch = _note_to_pitch(note)
+        if pitch is None:
+            transposed.append(note)
+            continue
+        prefer_flat = _prefer_flat_for_note(note)
+        transposed.append(_pitch_to_note((pitch + shift) % 12, prefer_flat=prefer_flat))
+    return transposed
+
+
+def transpose_key(source_key: str, target_key: str = None):
+    source_normalized = normalize_key_name(source_key)
+    if source_normalized in ["", None]:
+        print(f"Unknown key: {source_key}")
+        return
+
+    if target_key is None:
+        print("Transposition guide")
+        print("==================")
+        print(f"To transpose {source_key}, choose a new key and move each note by the same interval.")
+        print("General rule: all intervals stay the same, but the pitch centre changes.")
+        print("For example, moving from C to G is a perfect fifth and raises the whole piece by 7 semitones.")
+        return
+
+    source_pitch = _note_to_pitch(source_normalized)
+    target_pitch = _note_to_pitch(normalize_key_name(target_key))
+    if source_pitch is None or target_pitch is None:
+        print(f"Unable to transpose from {source_key} to {target_key}.")
+        return
+
+    distance = (target_pitch - source_pitch) % 12
+    interval_names = {
+        0: "perfect unison",
+        1: "minor second",
+        2: "major second",
+        3: "minor third",
+        4: "major third",
+        5: "perfect fourth",
+        6: "tritone",
+        7: "perfect fifth",
+        8: "minor sixth",
+        9: "major sixth",
+        10: "minor seventh",
+        11: "major seventh",
+    }
+
+    target_key_name = normalize_key_name(target_key)
+    print(f"Transposing {source_key} to {target_key_name} major")
+    print(f"Interval: {interval_names.get(distance, f'{distance} semitones')}")
+    print(f"This moves the whole piece by {distance} semitones, preserving the pattern of intervals while changing the tonal centre.")
+    print("A practical way to think about it:")
+    print("- keep the same melodic shape")
+    print("- keep the same chord functions")
+    print("- adjust the key signature to match the new key")
+    print("- re-check accidentals and leading tones in the new context")
+
+    source_scale = ["C", "D", "E", "F", "G", "A", "B"]
+    transposed_scale = transpose_notes(source_scale, distance)
+    print(f"Example scale pattern: {' '.join(source_scale)}")
+    print(f"Transposed scale: {' '.join(transposed_scale)}")
+    print("This is the same scale shape, just moved into a new key.")
+
+
+def transposition_guide():
+    print("Transposition")
+    print("=============")
+    print("To transpose a piece means to move every pitch by the same interval while keeping the musical relationships intact.")
+    print("The purpose is often to suit a different vocal range, a different instrument, a more comfortable fingering, or a different ensemble context.")
+    print("")
+    print("Generic rules for transposing a piece")
+    print("1. Decide the target key or interval before altering any notes.")
+    print("2. Move every note by the same amount of semitones.")
+    print("3. Keep chord functions and melodic shape the same; only the pitch centre changes.")
+    print("4. Check the key signature afterwards, because accidentals may change when you move to the new key.")
+    print("5. For arrangements with singers, check range and tessitura before deciding on the new key.")
+    print("6. For instruments, consider whether the part is written for concert pitch or for a transposing instrument such as B♭ trumpet or E♭ alto saxophone.")
+    print("")
+    print("Transposing by key")
+    print("- C major to G major: move up a perfect fifth, or +7 semitones.")
+    print("- C major to F major: move up a perfect fourth, or +5 semitones.")
+    print("- C major to D major: move up a major second, or +2 semitones.")
+    print("- A minor to C minor: move up a minor third, or +3 semitones.")
+    print("The same ideas work for any key: each key has a fixed interval relationship to the parent key, and the new key signature follows that relationship.")
+    print("")
+    print("Specific guidance by scale")
+    print("- Major scales transpose by preserving the same pattern of steps: tone, tone, semitone, tone, tone, tone, semitone.")
+    print("- Natural minor scales keep the same minor-pattern interval structure, while the key signature shifts to match the new minor key.")
+    print("- Modes preserve the parent scale shape, but the tonal centre changes. When you transpose a mode, you transpose the whole parent collection and keep the same modal quality.")
+    print("- If a melody is based on D Dorian, transposing it means moving the whole Dorian pattern by the same interval while keeping the same modal colour.")
+    print("")
+    print("Specific guidance by chord")
+    print("- A major triad transposed by a perfect fifth becomes the new dominant function of the target key.")
+    print("- A minor triad is still a minor triad after transposition; only the pitch centre changes.")
+    print("- The chord quality must remain the same unless you deliberately want to change the harmonic colour.")
+    print("- For example, G major to C major means moving each note up a perfect fourth; G B D becomes C E G.")
+    print("")
+    print("Specific guidance by mode")
+    print("- Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, and Locrian all keep their interval pattern when transposed.")
+    print("- What changes is the root pitch, not the mode's internal structure.")
+    print("- If a phrase is in A Aeolian, transposing it to D Aeolian keeps the same minor, reflective feel while moving the whole phrase to a new pitch centre.")
+    print("")
+    print("Specific guidance by piece condition")
+    print("- For a melody alone: move each note by the selected interval and check whether the line still sits comfortably in the singer's range.")
+    print("- For a lead sheet: transpose the melody and the chord symbols together so the harmonic function remains coherent.")
+    print("- For a full arrangement: transpose the whole harmony, bassline, and melody together unless the ensemble needs a different strategy.")
+    print("- For a fixed-pitch instrument: the part must be transposed according to the instrument's written range and transposition convention.")
+    print("- For a vocal piece: choose the new key by checking the strongest notes and the part's comfortable tessitura, not only by the written notes.")
+    print("")
+    print("Quick practical example")
+    print("- Original: C major -> melody: C E G")
+    print("- Transposed up a perfect fifth: G B D")
+    print("- The interval pattern stays the same: root, third, fifth; only the pitch centre changes.")
+    print("This is why transposition is so useful: it preserves the musical logic while changing the overall key. ")
+
+
 # Practical composition and analysis guides.
 def riff_guide():
     print("Riffs")
@@ -753,6 +914,7 @@ __all__ = [
     "sharpKeys", "flatKeys", "minorKeys", "keySignatureMap", "minorKeySignatureMap",
     "sharp_order", "flat_order", "sharp_keys", "flat_keys", "keys", "scale_from_key", "scales_overview", "scales_page",
     "chord_from_key", "chords_overview", "chords_page", "modes_from_key", "modes_overview", "modes_page",
+    "transpose_notes", "transpose_key", "transposition_guide",
     "riff_guide", "bassline_guide", "melody_guide", "genre_analysis_guide", "walking_bassline_guide",
     "circle_of_fifths", "minor_keys", "natural_minor_scale", "normalize_key_name", "key_signature", "mnemonic"
 ]

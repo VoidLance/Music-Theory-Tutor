@@ -14,6 +14,9 @@ from tonal.data import (
     melody_guide,
     genre_analysis_guide,
     walking_bassline_guide,
+    transpose_notes,
+    transpose_key,
+    transposition_guide,
 )
 from tonal.quiz import scale_quiz, chord_quiz, modes_quiz, combined_quiz
 
@@ -118,6 +121,29 @@ class ChordAndModesTest(unittest.TestCase):
         output = buf.getvalue().lower()
         self.assertIn("genre", output)
         self.assertIn("rhythm", output)
+
+    def test_transposition_feature_exists_and_keeps_pattern(self):
+        self.assertTrue(callable(transpose_notes))
+        self.assertTrue(callable(transpose_key))
+        self.assertTrue(callable(transposition_guide))
+
+        self.assertEqual(transpose_notes(["C", "E", "G"], 2), ["D", "F#", "A"])
+
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            transpose_key("C", "G")
+        output = buf.getvalue().lower()
+        self.assertIn("g major", output)
+        self.assertIn("perfect fifth", output)
+
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            transposition_guide()
+        output = buf.getvalue().lower()
+        self.assertIn("scale", output)
+        self.assertIn("mode", output)
+        self.assertIn("chord", output)
+        self.assertIn("transpose", output)
 
 
 if __name__ == "__main__":
