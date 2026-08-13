@@ -390,7 +390,7 @@ def genre_analysis_guide():
     print("For example, a fanfare often uses repetition, strong accents, broad leaps, and a short, punchy rhythmic figure that feels ceremonial or heroic.")
     print("A fanfare may also use a broken-chord pattern such as root-fifth-octave or a repeated rising idea that feels like a call to action.")
     print("Try this exercise: take a sheet of music, circle the repeated rhythmic cells, then circle any motif that appears more than once. Once you track those, you can often tell what kind of piece it is.")
-    print("The old lesson you mentioned is a classic example: a page of fanfare pieces can be reduced to a few repeated pattern habits, and once you recognise those, you can make your own fanfare by building a short phrase from them.")
+    print("The old lesson I remember is a classic example: a page of fanfare pieces can be reduced to a few repeated pattern habits, and once you recognise those, you can make your own fanfare by building a short phrase from them.")
     print("A beginner fanfare recipe is: choose a strong time signature, write a repeated accent pattern, use a broken-chord or arpeggio idea, then repeat it with slight variation and close with a clear cadence.")
     print("This is how pattern recognition becomes composition: you are not copying a piece, you are learning the grammar of a style.")
     print("")
