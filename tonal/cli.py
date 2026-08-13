@@ -4,6 +4,11 @@ import sys
 # It keeps the menu system separate from the music-theory logic, which makes it easier to keep extending the project without crowding everything into one file.
 
 from .data import (
+    bassfret_compare,
+    bassfret_guide,
+    bassfret_intervals,
+    bassfret_money_notes,
+    bassfret_scale,
     bassline_guide,
     chord_from_key,
     chords_overview,
@@ -58,9 +63,15 @@ FUNCTIONS = {
     "transposition": transposition_guide,
     "transpose": transpose_key,
     "transpose_key": transpose_key,
+    "bassfret": bassfret_guide,
+    "bassfret_money": bassfret_money_notes,
+    "bassfret_intervals": bassfret_intervals,
+    "bassfret_scale": bassfret_scale,
+    "bassfret_compare": bassfret_compare,
     "key": key_signature,
     "key_signature": key_signature,
     "mnemonic": mnemonic,
+    "P": mnemonic,
     "quiz": quiz,
 }
 
@@ -93,6 +104,10 @@ def show_help():
         "walking_bassline",
         "transposition",
         "transpose <source> <target>",
+        "bassfret",
+        "bassfret money",
+        "bassfret intervals",
+        "bassfret scale <name>",
         "key <name>",
         "mnemonic <sharp|flat>",
         "quiz",
@@ -104,6 +119,28 @@ def show_help():
     print("  tonal key Dm")
     print("  tonal mnemonic sharp")
     print("  tonal quiz")
+
+
+def show_bassfret_help():
+    print("bassfret")
+    print("Usage: tonal bassfret [money|intervals|scale <name>]")
+    print("")
+    print("Available arguments:")
+    for name in [
+        "money",
+        "intervals",
+        "scale <name>",
+        "compare",
+        "help",
+    ]:
+        print(f"  - {name}")
+    print("")
+    print("Examples:")
+    print("  tonal bassfret")
+    print("  tonal bassfret money")
+    print("  tonal bassfret intervals")
+    print("  tonal bassfret scale G mixolydian")
+    print("  tonal bassfret compare")
 
 # Setup input argument function
 # The user can pass a function name and any extra arguments, and the app dispatches to the right piece of logic.
@@ -165,6 +202,35 @@ def main(func_name: str, *args):
             print("Please choose 'sharp' or 'flat'.")
             return
         FUNCTIONS[func_name](" ".join(args))
+        return
+
+    if func_name == "bassfret":
+        if not args:
+            FUNCTIONS[func_name]()
+            return
+        subcommand = args[0].lower()
+        if subcommand in ["--help", "-h", "help"]:
+            show_bassfret_help()
+            return
+        if subcommand in ["money", "money_notes", "notes"]:
+            FUNCTIONS["bassfret_money"]()
+            return
+        if subcommand in ["interval", "intervals"]:
+            FUNCTIONS["bassfret_intervals"]()
+            return
+        if subcommand in ["compare", "comparison"]:
+            FUNCTIONS["bassfret_compare"]()
+            return
+        if subcommand in ["scales"]:
+            FUNCTIONS["bassfret_compare"]()
+            return
+        if subcommand in ["scale"]:
+            if len(args) > 1:
+                FUNCTIONS["bassfret_scale"](" ".join(args[1:]))
+            else:
+                FUNCTIONS["bassfret_compare"]()
+            return
+        FUNCTIONS[func_name]()
         return
 
     if func_name in ["transpose", "transpose_key"]:

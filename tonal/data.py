@@ -215,6 +215,53 @@ def chords_overview():
     print("For example, in G major the notes are G A B C D E F#. The 1st, 3rd, and 5th are G B D.")
     print("So the G major triad is G B D.")
     print("The quality of the triad changes depending on the 3rd: major, minor, or diminished.")
+    print("")
+    print("Arpeggios")
+    print("- An arpeggio is simply a chord broken into individual notes in order.")
+    print("- When you play G B D as G - B - D - G, you are arpeggiating the G major chord.")
+    print("- Arpeggios are useful for learning chord tones, smooth bass movement, and melodic fills.")
+    print("- Practice by playing each chord tone deliberately, then connecting them without losing the shape of the chord.")
+    print("")
+    print("Inversions")
+    print("- A chord inversion changes which chord tone is in the bass.")
+    print("- Root position: G B D (root in the bass)")
+    print("- First inversion: B D G (3rd in the bass)")
+    print("- Second inversion: D G B (5th in the bass)")
+    print("- Inversions help the bassline move smoothly and keep the harmony connected without jumping between roots too much.")
+    print("- Use inversions to create a better voice-leading line and to keep the bass line more musical than just repeating roots.")
+    print("")
+    print("How to construct a chord across four, five, and six strings")
+    print("A bass chord can be voiced across any number of strings, but the goal is always the same: keep the chord tones clear and playable.")
+    print("Across four strings:")
+    print("- Use the root, 3rd, 5th, and optionally the octave or 7th for colour.")
+    print("- Example for G major on a four-string bass: G - B - D - G")
+    print("- This gives a clear triad with enough fullness to sound balanced without being muddy.")
+    print("Across five strings:")
+    print("- Add an extra octave or a nearby extension to widen the chord.")
+    print("- Example: G - B - D - G - B, or G - D - G - B - D depending on the register you want.")
+    print("- This is helpful when you want a fuller voicing or a more spread-out arpeggio pattern.")
+    print("Across six strings:")
+    print("- You can spread the chord across a wider range and use even more interval colour.")
+    print("- Example: G - D - G - B - D - G, or a 3rd/5th/7th layout if you want more colour.")
+    print("- On bass, make sure the chord still sounds like a bass chord, not a dense guitar-like stack of notes.")
+    print("")
+    print("When two notes fall on the same string")
+    print("- This is a very common problem when building inversions or extended arpeggios.")
+    print("- If two notes share the same string, you cannot play them simultaneously as separate pitches on that string without changing fingering or reordering the voicing.")
+    print("- The usual fix is to choose a different inversion, move one note to another string, or re-order the notes into a more playable sequence.")
+    print("- For example, a G major inversion such as G - B - D - G can become B - D - G - B when you want the 3rd in the bass, but if the note layout causes two notes to collide on one string, move the upper chord tone to the next string instead of forcing the clash.")
+    print("- The rule is: keep the chord tones clear, and let the arrangement of strings support the intended inversion rather than fight it.")
+    print("- In practice, if you see two notes on one string, choose the string that keeps the line smoothest and then adjust the voicing by moving one note to an adjacent string.")
+    print("- Bass players often solve this by re-voicing the chord into a different inversion or by choosing a more compact position that keeps the chord shape playable.")
+    print("")
+    print("A useful practical method")
+    print("1. Start with the root, third, fifth, and octave of the chord.")
+    print("2. Decide which chord tone should sit in the bass.")
+    print("3. Choose the string layout that keeps the notes spread cleanly across strings.")
+    print("4. If a note repeats on the same string, shift one note to the next string or change inversion.")
+    print("5. Smooth the motion between chord shapes so the arpeggio feels like a musical line, not a static shape.")
+    print("")
+    print("This is the heart of bass voicing: the chord is not just a formula, it is a playable arrangement of notes across the neck.")
 
 # Create a feature to show the major modes built from a key.
 def modes_from_key(key_name: str):
@@ -456,6 +503,346 @@ def transposition_guide():
     print("")
     print("Quick practical example")
     print("- Original: C major -> melody: C E G")
+
+
+def _string_note_map():
+    return {
+        "E": ["E", "F", "F#", "G", "G#", "A", "A#", "B", "C", "C#", "D", "D#", "E"],
+        "A": ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A"],
+        "D": ["D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", "C", "C#", "D"],
+        "G": ["G", "G#", "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G"],
+    }
+
+
+def _note_pitch_set(notes):
+    return {_note_to_pitch(note) for note in notes if _note_to_pitch(note) is not None}
+
+
+def _display_fretboard(title: str, highlight_note_names=None):
+    highlight = _note_pitch_set(highlight_note_names or [])
+    print(title)
+    print("=" * len(title))
+    for string_name, notes in reversed(list(_string_note_map().items())):
+        cells = []
+        for fret, note in enumerate(notes):
+            pitch = _note_to_pitch(note)
+            label = f"{fret}:{note}"
+            if pitch in highlight:
+                label = f"[{fret}:{note}]"
+            cells.append(f"{label:>8}")
+        print(f"{string_name} string: {' '.join(cells)}")
+    print("")
+
+
+def _display_ascii_fretboard(title: str, highlight_note_names=None, fret_markers=None, label_mode="notes"):
+    highlight = _note_pitch_set(highlight_note_names or [])
+    fret_markers = set(fret_markers or [5, 7])
+    print(title)
+    print("=" * len(title))
+    string_names = ["G", "D", "A", "E"]
+    for string_name in string_names:
+        notes = _string_note_map()[string_name]
+        labels = []
+        for fret in range(0, 13):
+            note = notes[fret]
+            pitch = _note_to_pitch(note)
+            if label_mode == "notes":
+                label = note if pitch in highlight else "."
+            elif label_mode == "roman":
+                roman_map = {
+                    0: "I", 1: "II", 2: "III", 3: "IV", 4: "V", 5: "VI", 6: "VII", 7: "VIII",
+                    8: "IX", 9: "X", 10: "XI", 11: "XII", 12: "XIII"
+                }
+                label = roman_map.get(fret % 13, ".") if pitch in highlight else "."
+            else:
+                label = note if pitch in highlight else "."
+            labels.append(label)
+
+        width = max(3, max(len(str(label)) for label in labels))
+        cells = []
+        for fret in range(0, 13):
+            label = labels[fret]
+            cell_label = f"{label:^{width}}"
+            if fret in fret_markers:
+                cells.append(f"{fret:>2}:|| {cell_label} ||")
+            else:
+                cells.append(f"{fret:>2}:| {cell_label} |")
+        print(f"{string_name}: " + " ".join(cells))
+    print("")
+
+
+def _display_interval_pattern(pattern_name: str, root: str, offsets, string_offsets=None):
+    print(pattern_name)
+    print("-" * len(pattern_name))
+    root_pitch = _note_to_pitch(root)
+    note_row = []
+    for string_name in ["E", "A", "D", "G"]:
+        segments = []
+        for fret in range(0, 13):
+            note = _string_note_map()[string_name][fret]
+            if fret in offsets:
+                segments.append(f"{fret}:{note}")
+            elif fret in [0, 2, 3, 5, 7, 8, 10, 12]:
+                segments.append(".")
+        row = " | ".join(segments)
+        print(f"{string_name}: {row}")
+    print("")
+
+
+def _interval_label(offset: int, flattened: bool = False):
+    names = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"]
+    label = names[offset % 8]
+    if flattened:
+        return f"{label}♭"
+    return label
+
+
+def _display_interval_diagram(title: str, string_positions):
+    print(title)
+    print("-" * len(title))
+    all_labels = []
+    for positions in string_positions.values():
+        all_labels.extend(str(v) for v in positions.values())
+    all_labels = ["."] + all_labels
+    cell_width = max(3, max(len(label) for label in all_labels))
+
+    for string_name in ["G", "D", "A", "E"]:
+        positions = string_positions.get(string_name, {})
+        cells = []
+        for fret in range(0, 13):
+            label = str(positions.get(fret, "."))
+            padded = f"{label:^{cell_width}}"
+            if fret in {5, 7}:
+                cells.append(f"{fret:>2}:|| {padded} ||")
+            else:
+                cells.append(f"{fret:>2}:| {padded} |")
+        print(f"{string_name}: " + " ".join(cells))
+    print("")
+
+
+def bassfret_money_notes():
+    print("Bass fretboard: Money notes")
+    print("==========================")
+    print("The 'money notes' are the anchor notes that make the fretboard easier to learn.")
+    print("If you memorise only a few places, you can quickly find the rest of the notes by pattern and interval.")
+    print("The most useful money notes are the open strings, the 5th fret, the 7th fret, and the octave at the 12th fret.")
+    print("Open strings are: E A D G")
+    print("The 5th fret on any string gives the same pitch as the next string open, which makes string-to-string navigation easy.")
+    print("The 7th fret is a very useful landing point when you want to move smoothly around the neck and hold a shape.")
+    print("The 12th fret is the octave, so the note name repeats and the pattern resets.")
+    print("")
+    print("Key spacing rules")
+    print("- Across two strings and up two frets: same note an octave higher.")
+    print("- Across one string and down 5 frets: same octave, because 5 frets up on a string is the same pitch as the next string open.")
+    print("- Across one string and down 4 frets: the same interval pattern as a major-scale step, useful for finding the next note in a scale.")
+    print("- Use string-to-string movement by 5ths and 4ths to avoid counting all the way from the root.")
+    print("- Learn the octave repeats at 12 and the 5th-fret relationship before memorising every note individually.")
+    print("")
+    money_notes = ["E", "A", "D", "G", "C", "F", "B", "E"]
+    print("Fretboard diagram (5th and 7th frets marked strongly):")
+    _display_ascii_fretboard("Money-note map", money_notes, fret_markers=[5, 7], label_mode="notes")
+    print("How to use them:")
+    print("- Start by learning the open strings and their octave repeats.")
+    print("- Use the 5th-fret rule to jump between strings.")
+    print("- Learn the 7th fret as a strong tonal landing zone, especially for root movement and chord tones.")
+    print("- Treat the 12th fret as a reset point: the note names repeat and the patterns become easier to read.")
+    print("This is how you turn the fretboard from a maze into a set of repeating shapes.")
+
+
+def bassfret_intervals():
+    print("Bass fretboard: Intervals")
+    print("=========================")
+    print("Intervals tell you how notes relate to the root and help you build lines without memorising every note by raw position.")
+    print("A clear way to think about them is by roman numeral: I = root, II = second, III = third, IV = fourth, V = fifth, VI = sixth, VII = seventh, VIII = octave.")
+    print("The practical idea is to learn the interval pattern across the strings, not to repeat the same list on every string.")
+    print("Each interval has its own fingering shape, and the easiest ones are the ones that sit inside a compact span around the root.")
+    print("")
+
+    root_position = {"E": {4: "I"}, "A": {1: "II"}, "D": {1: "V"}, "G": {1: "VII"}}
+    _display_interval_diagram("Perfect 5th: root to V", {"E": {4: "I", 7: "V"}, "A": {1: "II", 5: "IV", 9: "V"}, "D": {1: "I", 4: "IV", 8: "VI"}, "G": {1: "II", 5: "V"}})
+    _display_interval_diagram("Tritone: root to IV#/V♭", {"E": {4: "I", 6: "IV#/V♭"}, "A": {1: "II", 4: "IV", 7: "V"}, "D": {1: "I", 5: "IV", 8: "VI"}, "G": {1: "II", 5: "V"}})
+    _display_interval_diagram("Major 6th: root to VI", {"E": {4: "I", 9: "VI"}, "A": {1: "II", 4: "IV", 7: "V", 9: "VI"}, "D": {1: "I", 6: "VI"}, "G": {1: "II"}})
+    _display_interval_diagram("Major 7th: root to VII", {"E": {4: "I", 10: "VII"}, "A": {1: "II", 5: "IV", 9: "VI", 10: "VII"}, "D": {1: "I", 7: "V"}, "G": {1: "II"}})
+    _display_interval_diagram("Octave: root to VIII", {"E": {4: "I", 12: "VIII"}, "A": {5: "VIII"}, "D": {1: "II"}, "G": {1: "II"}})
+    _display_interval_diagram("Major 2nd: root to II", {"E": {4: "I", 5: "II"}, "A": {1: "II", 2: "III♭"}, "D": {1: "I", 2: "II"}, "G": {1: "II"}})
+    print("Root-to-octave map: practical fingering")
+    print("====================================")
+    _display_interval_diagram("Root to VIII map", {"E": {0: ".", 1: ".", 2: ".", 4: "I", 5: "II♭", 6: "II", 7: "III♭", 8: "III"}, "A": {1: "II", 2: "III♭", 3: "III", 4: "IV", 5: "IV#/V♭", 6: "V", 7: "V#/VI♭", 8: "VI"}, "D": {1: "V", 2: "V#/VI♭", 3: "VI", 4: "VII♭", 5: "VII", 6: "VIII"}, "G": {1: ".", 2: ".", 3: "."}})
+    print("The rule is simple:")
+    print("- start from the root and keep the interval span compact")
+    print("- do not repeat the same values on every string")
+    print("- move through the strings in the practical shape that keeps the same interval logic but makes the fingering easy to play")
+    print("- the low string is the root and first few upper intervals, the next string carries the middle of the shape, and the top string finishes the interval motion toward the octave")
+    print("")
+    print("Practical advice")
+    print("- Learn the interval shape, not just a list of numbers.")
+    print("- Use the same voice-leading idea across strings instead of repeating the same values on every string.")
+    print("- For melodic work, memorise the shape that feels easy to reach and keep the notes connected to the root.")
+    print("- The most useful intervals are root, 3rd, 5th, 7th, octave, then the passing tones between them.")
+    print("If you can hear the interval and see the shape, you can find it anywhere on the neck without counting from zero every time.")
+
+
+def _build_scale_comparison_page():
+    examples = [
+        ("G mixolydian", ("G", [0, 2, 4, 5, 7, 9, 10])),
+        ("D dorian", ("D", [0, 2, 3, 5, 7, 9, 10])),
+        ("E phrygian", ("E", [0, 1, 3, 5, 7, 8, 10])),
+        ("A natural minor", ("A", [0, 2, 3, 5, 7, 8, 10])),
+        ("A blues", ("A", [0, 3, 5, 6, 7, 10])),
+    ]
+    print("Bass fretboard: Scale comparison")
+    print("================================")
+    print("This page shows a small set of very useful scale shapes together so you can compare their interval patterns and learn them as a family.")
+    print("The goal is to hear the difference between major, minor, modal, and blues colours without learning them as unrelated shapes.")
+    for name, (root, semitones) in examples:
+        notes = _scale_notes_from_root(root, semitones)
+        print(f"\n{name.title()} ({root} root): {' '.join(notes)}")
+        print("Pattern:")
+        print("  " + " ".join(str(n) for n in semitones))
+        _display_ascii_fretboard(f"{name.title()} scale", notes, fret_markers=[5, 7])
+    print("Teaching note:")
+    print("- Mixolydian and Dorian are close cousins, but Mixolydian has a flatter VII while Dorian keeps a smoother minor colour.")
+    print("- Phrygian and Aeolian both feel dark and minor, but Phrygian has a more exotic, tense colour because of the flat II.")
+    print("- Blues adds the blue third and flat seventh, which is why it feels so expressive and flexible.")
+    print("- Learn the interval pattern, not just the note names, so you can use the scale anywhere on the neck.")
+
+
+def bassfret_compare():
+    _build_scale_comparison_page()
+
+
+def _scale_definitions():
+    return {
+        "g mixolydian": ("G", [0, 2, 4, 5, 7, 9, 10]),
+        "d dorian": ("D", [0, 2, 3, 5, 7, 9, 10]),
+        "a natural minor": ("A", [0, 2, 3, 5, 7, 8, 10]),
+        "e phrygian": ("E", [0, 1, 3, 5, 7, 8, 10]),
+        "f lydian": ("F", [0, 2, 4, 6, 7, 9, 11]),
+        "a blues": ("A", [0, 3, 5, 6, 7, 10]),
+        "g pentatonic major": ("G", [0, 2, 4, 7, 9]),
+        "e pentatonic minor": ("E", [0, 3, 5, 7, 10]),
+        "b♭ major": ("B♭", [0, 2, 4, 5, 7, 9, 11]),
+    }
+
+
+def _scale_notes_from_root(root_note: str, semitones):
+    root_pitch = _note_to_pitch(root_note)
+    if root_pitch is None:
+        return []
+    notes = []
+    for offset in semitones:
+        pitch = (root_pitch + offset) % 12
+        prefer_flat = "b" in _normalize_note_name(root_note).lower()
+        notes.append(_pitch_to_note(pitch, prefer_flat=prefer_flat))
+    return notes
+
+
+def bassfret_scale(scale_name: str = "G mixolydian"):
+    lookup_name = (scale_name or "G mixolydian").strip().lower()
+    root_key = None
+    if lookup_name in {"g", "a", "d", "e", "f", "c", "b", "bb", "eb", "ab", "db", "gb"}:
+        root_key = lookup_name.upper().replace("BB", "B♭").replace("EB", "E♭").replace("AB", "A♭").replace("DB", "D♭").replace("GB", "G♭")
+        print(f"Bass fretboard: {root_key} scale set")
+        print("=" * (len(root_key) + 29))
+        print("A practical improvisation set for this root: choose the scale colour that suits the musical moment.")
+        print("These are the most useful patterns on bass for a wide range of styles and moods.")
+        scale_set = []
+        if root_key == "G":
+            scale_set = [
+                ("G mixolydian", ("G", [0, 2, 4, 5, 7, 9, 10])),
+                ("G dorian", ("G", [0, 2, 3, 5, 7, 9, 10])),
+                ("G major", ("G", [0, 2, 4, 5, 7, 9, 11])),
+                ("G blues", ("G", [0, 3, 5, 6, 7, 10])),
+                ("G pentatonic major", ("G", [0, 2, 4, 7, 9])),
+            ]
+        elif root_key == "A":
+            scale_set = [
+                ("A natural minor", ("A", [0, 2, 3, 5, 7, 8, 10])),
+                ("A dorian", ("A", [0, 2, 3, 5, 7, 9, 10])),
+                ("A blues", ("A", [0, 3, 5, 6, 7, 10])),
+                ("A pentatonic minor", ("A", [0, 3, 5, 7, 10])),
+                ("A phrygian", ("A", [0, 1, 3, 5, 7, 8, 10])),
+            ]
+        elif root_key == "D":
+            scale_set = [
+                ("D dorian", ("D", [0, 2, 3, 5, 7, 9, 10])),
+                ("D mixolydian", ("D", [0, 2, 4, 5, 7, 9, 10])),
+                ("D major", ("D", [0, 2, 4, 5, 7, 9, 11])),
+                ("D pentatonic major", ("D", [0, 2, 4, 7, 9])),
+                ("D minor pentatonic", ("D", [0, 3, 5, 7, 10])),
+            ]
+        else:
+            scale_set = [
+                (f"{root_key} mixolydian", (root_key, [0, 2, 4, 5, 7, 9, 10])),
+                (f"{root_key} dorian", (root_key, [0, 2, 3, 5, 7, 9, 10])),
+                (f"{root_key} blues", (root_key, [0, 3, 5, 6, 7, 10])),
+            ]
+        for name, (root, intervals) in scale_set:
+            notes = _scale_notes_from_root(root, intervals)
+            print(f"\n{name.title()}: {' '.join(notes)}")
+            _display_ascii_fretboard(f"{name.title()} pattern", notes, fret_markers=[5, 7], label_mode="notes")
+        print("Use the scale that matches the mood: brighter and more stable for major colours, darker and more fluid for minor and modal colours.")
+        return
+
+    definition = _scale_definitions().get(lookup_name)
+    if definition is None:
+        available = ", ".join(sorted(_scale_definitions().keys()))
+        print(f"Unknown scale selection: {scale_name}")
+        print(f"Try one of: {available}")
+        return
+
+    root, intervals = definition
+    notes = _scale_notes_from_root(root, intervals)
+    print(f"Bass fretboard: {scale_name.title()}")
+    print("=" * (len(scale_name) + 22))
+    print(f"Root: {root} | Notes: {' '.join(notes)}")
+    print("This is a useful shape because it keeps the scale in a compact, musical set of positions.")
+    print("Look for the repeating interval pattern and use the money-note anchors to navigate the neck.")
+    _display_ascii_fretboard(f"{scale_name.title()} pattern", notes, fret_markers=[5, 7], label_mode="notes")
+    print("Key teaching point:")
+    print("- use the money notes to find the root quickly")
+    print("- find the third and seventh to confirm the scale quality")
+    print("- move by interval shapes, not by raw counting, once the pattern is familiar")
+
+
+def bassfret_guide():
+    print("Bass fretboard guide")
+    print("====================")
+    print("The fastest way to learn the bass fretboard is to stop thinking of it as 24 random positions and instead think of it as a network of repeating shapes.")
+    print("Use the money notes as your anchors: open strings, 5th fret, 7th fret, and octave at the 12th fret.")
+    print("Once those are stable, the rest of the neck becomes a pattern puzzle instead of a blind search.")
+    print("")
+    print("How to learn the notes by relation to the money notes")
+    print("1. Learn the open strings by heart: E A D G")
+    print("2. Memorise the 5th-fret trick: the 5th fret of the E string is A, the 5th fret of A is D, and the 5th fret of D is G.")
+    print("3. Memorise the 7th fret as a strong tonal marker, especially for chord tones and motion between notes.")
+    print("4. Treat the 12th fret as a reset point: the notes repeat an octave above the open string.")
+    print("5. Fill in the gaps by learning interval shapes, not by memorising every single position individually.")
+    print("6. If you know the root and the interval pattern, you can find the rest of the notes without counting carefully every time.")
+    print("")
+    print("How to stop reading tabs first and start sight-reading the staff")
+    print("The method is:")
+    print("1. Learn the staff landmarks first: identify the lines and spaces by note name, not by memorising a single pattern.")
+    print("2. Read the note names without looking at the fretboard at all for the first pass.")
+    print("3. Then find the same pitch on the bass by interval or money-note shape, not by mental conversion from tab.")
+    print("4. Practise small, repeated note patterns so you can recognise them as shapes instead of single random notes.")
+    print("5. Keep rhythm and pitch separate in your head: first read the note names, then read the beats, then connect them.")
+    print("6. Use the same pattern recognition you use in tabs, but apply it to the staff: 3rds, 5ths, scales, and stepwise motion all read the same way on the page.")
+    print("")
+    print("How to get to sheet music sight-reading speed")
+    print("- Read note names by pattern, not by staring at individual notes.")
+    print("- Learn the common bass-clef landmarks quickly: G, A, B, C, D, E, F on different lines and spaces.")
+    print("- Use interval thinking: if the melody moves by a third, look for the third shape; if it leaps by a fifth, find the fifth directly.")
+    print("- Practice reading a short line at a slow pace and immediately find the note on the bass by position and shape.")
+    print("- Do not keep depending on the tab as a shortcut. The tab is useful for learning fingering, but the staff is your reading skill.")
+    print("- Once you can recognise scale degrees and chord tones on the page, you will stop feeling like the staff is a different language and start seeing it as a direct map of the same musical ideas.")
+    print("This is the real goal: reading the notation confidently enough that the tab no longer feels like the easier path.")
+    print("If you can recognise intervals, scales, and chord tones on the page and on the fretboard, sight-reading becomes a habit instead of a struggle.")
+    print("That is how you move from 'I read tabs first' to 'I can read the music and find it on the bass almost as fast'.")
+
+
+# Practical composition and analysis guides.
+def riff_guide():
     print("- Transposed up a perfect fifth: G B D")
     print("- The interval pattern stays the same: root, third, fifth; only the pitch centre changes.")
     print("This is why transposition is so useful: it preserves the musical logic while changing the overall key. ")
@@ -915,6 +1302,7 @@ __all__ = [
     "sharp_order", "flat_order", "sharp_keys", "flat_keys", "keys", "scale_from_key", "scales_overview", "scales_page",
     "chord_from_key", "chords_overview", "chords_page", "modes_from_key", "modes_overview", "modes_page",
     "transpose_notes", "transpose_key", "transposition_guide",
+    "bassfret_money_notes", "bassfret_intervals", "bassfret_scale", "bassfret_guide",
     "riff_guide", "bassline_guide", "melody_guide", "genre_analysis_guide", "walking_bassline_guide",
     "circle_of_fifths", "minor_keys", "natural_minor_scale", "normalize_key_name", "key_signature", "mnemonic"
 ]
