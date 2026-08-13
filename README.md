@@ -140,7 +140,25 @@ If `pipx` is already installed, you can skip the `pacman` step and run just:
 pipx install .
 ```
 
-After installation, the command should be available directly as:
+After installation, remove any stale alias that still points to the old broken path before testing:
+
+```fish
+functions -e tonal
+```
+
+Then add the correct alias for the current install:
+
+```fish
+alias tonal /home/$(whoami)/.local/bin/tonal
+```
+
+If you installed via `pipx`, this is the correct alias for most users on Linux and macOS. If you installed in a project-local virtual environment instead, use:
+
+```fish
+alias tonal "$PWD/Music-Theory-Tutor/.venv/bin/tonal"
+```
+
+Then test:
 
 ```bash
 tonal keys
@@ -170,7 +188,21 @@ In fish, use:
 source ./Music-Theory-Tutor/.venv/bin/activate.fish
 ```
 
-Then run commands from that environment, or add an alias that points to the exact project path on disk, not a guessed one.
+To make the command available as `tonal` from a project-local venv, add:
+
+```fish
+functions -e tonal
+alias tonal "$PWD/Music-Theory-Tutor/.venv/bin/tonal"
+```
+
+To make the alias permanent in fish:
+
+```fish
+echo 'functions -e tonal' >> ~/.config/fish/config.fish
+echo 'alias tonal "$HOME/Music-Theory-Tutor/.venv/bin/tonal"' >> ~/.config/fish/config.fish
+```
+
+Then reload your shell and run commands from that environment.
 
 ## Example usage
 
