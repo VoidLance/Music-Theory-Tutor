@@ -4,6 +4,7 @@ from contextlib import redirect_stdout
 
 from tonal.cli import FUNCTIONS
 from tonal.data import chord_from_key, modes_from_key, scales_overview, chords_overview
+from tonal.quiz import scale_quiz, chord_quiz, modes_quiz, combined_quiz
 
 
 class ChordAndModesTest(unittest.TestCase):
@@ -72,6 +73,10 @@ class ChordAndModesTest(unittest.TestCase):
             self.assertIn("minor", output)
             self.assertNotIn("b♭ major", output)
             self.assertNotIn("bb major", output)
+
+    def test_topic_specific_and_combined_quiz_functions_exist(self):
+        for quiz_fn in [scale_quiz, chord_quiz, modes_quiz, combined_quiz]:
+            self.assertTrue(callable(quiz_fn))
 
 
 if __name__ == "__main__":
