@@ -49,13 +49,34 @@ python3 main.py cello
 python3 main.py quiz
 ```
 
-If you prefer to keep the project in a virtual environment:
+If you prefer to keep the project in a virtual environment, first make sure you are in the repo directory. If you have not cloned it yet, do this once:
 
 ```bash
 git clone https://github.com/VoidLance/Music-Theory-Tutor.git
 cd Music-Theory-Tutor
+```
+
+Then create and activate the virtual environment:
+
+```bash
 python3 -m venv .venv
+```
+
+In bash/zsh:
+
+```bash
 source .venv/bin/activate
+```
+
+In fish:
+
+```fish
+source .venv/bin/activate.fish
+```
+
+After that, run the app from the active environment:
+
+```bash
 python main.py keys
 ```
 
@@ -63,33 +84,61 @@ python main.py keys
 
 On Arch-based systems such as CachyOS, `python3 -m pip install --user -e .` often fails because the system Python is in an externally managed environment. The safe approach is to create a virtual environment for the project, install the package there, and then expose the generated `tonal` command via your shell.
 
+If the repo is already present locally, skip the `git clone` step and just change into the project directory:
+
 ```bash
+cd Music-Theory-Tutor
+```
+
+If you want to reinstall or update from a fresh copy and the folder already exists, remove it and clone again:
+
+```bash
+rm -rf Music-Theory-Tutor
 git clone https://github.com/VoidLance/Music-Theory-Tutor.git
 cd Music-Theory-Tutor
+```
+
+Then create the environment and install the project:
+
+```bash
 python3 -m venv .venv
+```
+
+In bash/zsh:
+
+```bash
 source .venv/bin/activate
 python -m pip install -e .
 ```
 
-After that, you can either add the venv's `bin` directory to your `PATH` for the current shell:
+In fish:
 
-```bash
-export PATH="$PWD/.venv/bin:$PATH"
+```fish
+source .venv/bin/activate.fish
+python -m pip install -e .
 ```
 
-Or create a simple alias so you can call the app as `tonal` without permanently changing your `PATH`:
+If you want to avoid the activation step entirely, you can call the venv Python directly:
+
+```bash
+./.venv/bin/python -m pip install -e .
+```
+
+After installation, add the command to your shell so you can call it as `tonal`:
+
+In fish, a simple alias is the least invasive option:
 
 ```fish
 alias tonal "$HOME/Music-Theory-Tutor/.venv/bin/tonal"
 ```
 
-To make that alias permanent in fish:
+To make that alias permanent:
 
 ```fish
 echo 'alias tonal "$HOME/Music-Theory-Tutor/.venv/bin/tonal"' >> ~/.config/fish/config.fish
 ```
 
-If you prefer to add the script to your `PATH` instead, a common option is:
+Or, if you prefer to make the executable available on your `PATH`:
 
 ```fish
 mkdir -p ~/.local/bin
