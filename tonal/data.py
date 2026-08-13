@@ -70,12 +70,12 @@ def flat_order():
 # Create function to list the sharp keys in order of number of sharps
 # This follows the same pattern as the order of sharps, but shows the key names instead of the accidentals alone.
 def sharp_keys():
-    print(f"♯ Sharp keys: ♯\n{'\n'.join(sharpKeys)}\nThis is the same order as the sharps inside the key signature, except it starts and ends at C.\nA good beginner tip is to remember that sharp keys usually move upward through the circle of fifths.\n\n")
+    print(f"♯ Sharp keys: ♯\n{'\n'.join(sharpKeys)}\nThis is the same order as the sharps inside the key signature, except it starts and ends at C.\nOnly the F and the high C keys are sharp keys. In other words, only F is sharp, and C is natural.\n\n")
 
 # Create function to list the flat keys in order of number of flats
 # This mirrors the sharp-key section and helps beginners see the relationship between the key signature and the key name.
 def flat_keys():
-    print(f"♭ Flat keys: ♭\n{'\n'.join(flatKeys)}\nThis is the same order as the flats inside the key signature, except it starts and ends at C.\nA good beginner tip is to remember that flat keys move in the opposite direction from sharp keys.\n\n")
+    print(f"♭ Flat keys: ♭\n{'\n'.join(flatKeys)}\nThis is the same order as the flats inside the key signature, except it starts at C.\nEvery flat key is flat except F and C. In other words, every key except F is flat, and C is natural.\n\n")
 
 # Create function to display all information about key signatures
 # This is the combined reference section when the user wants the whole picture in one place.
@@ -98,7 +98,7 @@ def circle_of_fifths():
     print("A rough terminal-style layout looks like this:")
     print("""
                 C
-            F       G
+  ♭         F       G              #
          B♭            D
        E♭                A
         A♭              E
