@@ -216,6 +216,18 @@ def walking_bassline_quiz():
     ]
     run_quiz("🚶 Walking Bassline Quiz 🚶", questions)
 
+# Songwriting quiz.
+def songwriting_quiz():
+    questions = [
+        {"question": "What is the best place to start when writing a song?", "answer": "With the emotional core and the song's intention"},
+        {"question": "Why is it useful to define the role of each instrument in a song?", "answer": "So they support different musical jobs instead of crowding the same idea"},
+        {"question": "What is the main purpose of a chord progression?", "answer": "To carry the song forward through tension and release"},
+        {"question": "What should a lyric do in relation to the melody?", "answer": "Fit the rhythm naturally and reinforce the meaning"},
+        {"question": "What are the key qualities of a strong lyric?", "answer": "Meaning, poetry, storytelling, rhythm, sound, shape, and emphasis"},
+        {"question": "What is one practical songwriting workflow step?", "answer": "Choose the emotional core, then the key, chords, melody, and lyrics"},
+    ]
+    run_quiz("🎵 Songwriting Quiz 🎵", questions)
+
 # Combined quiz.
 def combined_quiz():
     questions = [
@@ -234,6 +246,9 @@ def combined_quiz():
         {"question": "What makes a melody memorable?", "answer": "A clear contour and singable shape"},
         {"question": "What is the first thing to analyse in a genre?", "answer": "Rhythm and metre"},
         {"question": "What is a walking bassline?", "answer": "A smooth bassline that moves through chord tones with a steady pulse"},
+        {"question": "What is the best place to start when writing a song?", "answer": "With the emotional core and the song's intention"},
+        {"question": "What should a lyric do in relation to the melody?", "answer": "Fit the rhythm naturally and reinforce the meaning"},
+        {"question": "Why is it useful to define the role of each instrument in a song?", "answer": "So they support different musical jobs instead of crowding the same idea"},
     ]
     run_quiz("🎼 Combined Music Theory Quiz 🎼", questions)
 
@@ -253,8 +268,9 @@ def quiz(menu_choice: str = None):
         print("10. Melody Quiz")
         print("11. Genre Analysis Quiz")
         print("12. Walking Bassline Quiz")
-        print("13. Combined Quiz")
-        print("14. Exit")
+        print("13. Songwriting Quiz")
+        print("14. Combined Quiz")
+        print("15. Exit")
 
         try:
             menu_choice = input("Choose a quiz: ")
@@ -288,12 +304,14 @@ def quiz(menu_choice: str = None):
         genre_analysis_quiz()
     elif selection in ["12", "walking bassline", "walking_bassline", "walking"]:
         walking_bassline_quiz()
-    elif selection in ["13", "combined", "all"]:
+    elif selection in ["13", "songwriting", "song writing", "songwriter"]:
+        songwriting_quiz()
+    elif selection in ["14", "combined", "all"]:
         combined_quiz()
-    elif selection in ["14", "exit", "quit"]:
+    elif selection in ["15", "exit", "quit"]:
         print("Returning to the main menu.")
     else:
-        print("Unknown choice. Please choose 1-14 or a quiz name.")
+        print("Unknown choice. Please choose 1-15 or a quiz name.")
         quiz()
 
 
@@ -302,5 +320,5 @@ __all__ = [
     "key_signature_quiz", "scale_quiz", "chord_quiz", "modes_quiz",
     "circle_of_fifths_quiz", "transposition_quiz", "bassfret_quiz",
     "riff_quiz", "bassline_quiz", "melody_quiz", "genre_analysis_quiz",
-    "walking_bassline_quiz", "combined_quiz", "quiz"
+    "walking_bassline_quiz", "songwriting_quiz", "combined_quiz", "quiz"
 ]
