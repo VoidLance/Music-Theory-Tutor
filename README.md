@@ -90,6 +90,39 @@ cd Music-Theory-Tutor
 
 This avoids the repeated `fatal: destination path ... already exists` error and ensures you are working in the actual project directory.
 
+## Update the app
+
+If you installed the app from a local clone, update it like this:
+
+```bash
+cd Music-Theory-Tutor
+git pull --ff-only
+source .venv/bin/activate
+python -m pip install -e .
+musor quiz
+```
+
+On Windows, use the same idea with your virtual environment activated:
+
+```powershell
+cd Music-Theory-Tutor
+git pull --ff-only
+.\.venv\Scripts\Activate.ps1
+python -m pip install -e .
+musor quiz
+```
+
+If you installed the project with `pipx`, update from the repository instead of reinstalling the whole app manually:
+
+```bash
+cd Music-Theory-Tutor
+git pull --ff-only
+pipx install . --force
+musor quiz
+```
+
+If you made local edits, commit or stash them before running `git pull` so you do not lose any work.
+
 ## Download from GitHub and run with Python
 
 If you want to use the project without installing it system-wide, clone the repository and run it from source.
