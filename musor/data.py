@@ -214,7 +214,7 @@ def scales_overview():
     print("- Example: C minor = tonic C, key signature contains E♭, A♭, and B♭.")
     print()
     print("Scale degrees")
-    print("- Scale degrees are numbered positions within the scale.")
+    print("- Scale degrees are numbered positions within the scale. The notes are arranged in alphabetical order from the tonic, and the scale degree number tells you which note it is in that sequence.")
     print("- They help explain function and spacing, but they do not create a separate rule for the key.")
     print()
     print("Patterns")
