@@ -99,7 +99,6 @@ cd Music-Theory-Tutor
 git pull --ff-only
 source .venv/bin/activate
 python -m pip install -e .
-musor quiz
 ```
 
 On Windows, use the same idea with your virtual environment activated:
@@ -109,7 +108,6 @@ cd Music-Theory-Tutor
 git pull --ff-only
 .\.venv\Scripts\Activate.ps1
 python -m pip install -e .
-musor quiz
 ```
 
 If you installed the project with `pipx`, update from the repository instead of reinstalling the whole app manually:
@@ -118,7 +116,6 @@ If you installed the project with `pipx`, update from the repository instead of 
 cd Music-Theory-Tutor
 git pull --ff-only
 pipx install . --force
-musor quiz
 ```
 
 If you made local edits, commit or stash them before running `git pull` so you do not lose any work.
