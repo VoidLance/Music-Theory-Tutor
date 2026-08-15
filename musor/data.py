@@ -67,15 +67,52 @@ def sharp_order():
 def flat_order():
     print(f"♭ The order of flats is the reverse of sharps: ♭\n{' --> '.join(orderFlats)}\n\nThe mnemonic to remember this is:\n'{' '.join(mnemonicFlats)}'\n\nOr simply 'Bead GCF'\n\nTie this to flats with:\n'Death lands flatly' and\n'Beads can be flat'\n\n")
 
+def _compact_key_label(key_name: str):
+    return key_name.replace(" major", " maj").replace(" minor", " min")
+
+
 # Create function to list the sharp keys in order of number of sharps
 # This follows the same pattern as the order of sharps, but shows the key names instead of the accidentals alone.
+def key_signature_group(key_names, include_label: bool = True, max_per_row: int = 6):
+    if not key_names:
+        return ""
+
+    groups = [key_names[i:i + max_per_row] for i in range(0, len(key_names), max_per_row)]
+    output_lines = []
+
+    for group in groups:
+        blocks = [key_signature_staff(key_name, include_label=False).splitlines() for key_name in group]
+        width = max(len(line) for block in blocks for line in block)
+        height = max(len(block) for block in blocks)
+        column_width = max(width, max(len(_compact_key_label(key_name)) for key_name in group))
+
+        if include_label:
+            label_row = "   " + "     ".join(_compact_key_label(key_name).ljust(column_width) for key_name in group)
+            output_lines.append(label_row)
+
+        for row_index in range(height):
+            row = "  " + "     ".join(
+                block[row_index].ljust(column_width) if row_index < len(block) else " " * column_width
+                for block in blocks
+            )
+            output_lines.append(row)
+
+        output_lines.append("")
+
+    return "\n".join(output_lines).rstrip()
+
+
 def sharp_keys():
     print(f"♯ Sharp keys: ♯\n{'\n'.join(sharpKeys)}\nThis is the same order as the sharps inside the key signature, except it starts and ends at C.\nOnly the F and the high C keys are sharp keys. In other words, only F is sharp, and C is natural.\n\n")
+    print(key_signature_group(["G major", "D major", "A major", "E major", "B major", "F# major"]))
+    print()
 
 # Create function to list the flat keys in order of number of flats
 # This mirrors the sharp-key section and helps beginners see the relationship between the key signature and the key name.
 def flat_keys():
     print(f"♭ Flat keys: ♭\n{'\n'.join(flatKeys)}\nThis is the same order as the flats inside the key signature, except it starts at C.\nEvery flat key is flat except F and C. In other words, every key except F is flat, and C is natural.\n\n")
+    print(key_signature_group(["F major", "B♭ major", "E♭ major", "A♭ major", "D♭ major", "G♭ major"]))
+    print()
 
 # Create function to display all information about key signatures
 # This is the combined reference section when the user wants the whole picture in one place.
@@ -85,6 +122,9 @@ def keys():
     sharp_keys()
     flat_keys()
     minor_keys()
+    print("Key signature reference diagrams:")
+    print(key_signature_group(["C major", "G major", "F major", "B♭ major", "E major", "A♭ major"], include_label=True))
+    print()
 
 # Create a practical scale-builder so the user can turn any key signature into the actual notes of the scale.
 def scale_from_key(key_name: str):
@@ -151,19 +191,26 @@ def scale_from_key(key_name: str):
         print("4. For natural minor, the formula is: tone, semitone, tone, tone, semitone, tone, tone.")
         print("5. Use the relative major to identify the same key signature, then build the minor pattern from the minor root.")
     print(f"Scale: {' '.join(scale)}")
-    print("Example: G major uses F# because the key signature contains one sharp, so the scale is G A B C D E F# G.")
+    print("Example: G major has the tonic G and the key signature contains F#. The scale is G A B C D E F# G.")
+    print("The key name tells us the tonic and the key signature. The pattern confirms the spacing of the notes within that key.")
+    print("The accidental is not changed by the position in the scale. The key signature belongs to the key, and the pattern confirms that the scale is correctly spaced within that key.")
+    print("In other words, the scale is built from the key name and its key signature, and the pattern checks that the note spacing matches the required major or minor structure.")
 
 # Generic scales guide.
 def scales_overview():
     print("Scales")
     print("=====")
-    print("A scale is a sequence of notes built from a key in order.")
-    print("To build a scale, start with the key note and then follow the scale pattern.")
-    print("For a major scale, the formula is: tone, tone, semitone, tone, tone, tone, semitone.")
-    print("For a natural minor scale, the formula is: tone, semitone, tone, tone, semitone, tone, tone.")
-    print("Before you build the notes, check the key signature so you know which notes are sharp or flat.")
-    print("Example: G major has one sharp, so the scale is G A B C D E F# G.")
-    print("Example: A minor has no sharps or flats, so the natural minor scale is A B C D E F G A.")
+    print("A scale is a sequence of notes built from a key name and its tonic.")
+    print("The key name tells you the tonic and the key signature. The key signature tells you which accidentals belong to that key.")
+    print("For example, G major has the tonic G and the key signature contains F#. C minor has the tonic C and the key signature contains E♭, A♭, and B♭.")
+    print("Scale degrees are just numbered positions within the scale. They are useful for explaining function and spacing, but they are not a separate rule that changes the key.")
+    print("The major pattern is: whole, whole, half, whole, whole, whole, half.")
+    print("The natural minor pattern is: whole, half, whole, whole, half, whole, whole.")
+    print("Use the pattern as a check on the spacing within the key, not as a second independent way of creating the key.")
+    print("Example: G major has the tonic G and the key signature contains F#. Starting from G, the major pattern confirms that the 6th degree must be F#, so the scale is G A B C D E F# G.")
+    print("Example: A minor has the tonic A and no sharps or flats in the key signature, so the natural minor scale is A B C D E F G A.")
+    print("The important idea is that the key name gives the tonic and the key signature, and the pattern confirms that the note spacing matches the required major or minor structure.")
+    print("This is why the accidental is not 'turned into' a different note just because of its position. It belongs to the key, and the pattern confirms that the scale is correctly built within that key.")
 
 # Create a function to teach how to build a triad chord from a major key.
 def chord_from_key(key_name: str):
@@ -1245,12 +1292,14 @@ def circle_of_fifths():
 # This is where the learner starts to bridge the gap between major keys and minor keys, and it helps explain why the relatives match.
 def minor_keys():
     minorSharpKeys = ["A min (0)", "E min (1)", "B min (2)", "F# min (3)", "C# min (4)", "G# min (5)", "D# min (6)", "A# min (7)"]
-    minorFlatKeys = ["A min (0)", "D min (1)", "G min (2)", "C min (3)", "F min (4)", "B♭ min (5)", "E♭ min (6)", "A♭ min (7)"]
+    minorFlatKeys = ["D min (1)", "G min (2)", "C min (3)", "F min (4)", "B♭ min (5)", "E♭ min (6)", "A♭ min (7)"]
 
     print("♯ Minor sharp keys: ♯")
     print(f"{'\n'.join(minorSharpKeys)}")
+    print(key_signature_group(["A minor", "E minor", "B minor", "F# minor", "C# minor", "G# minor", "D# minor", "A# minor"], max_per_row=6))
     print("\n♭ Minor flat keys: ♭")
     print(f"{'\n'.join(minorFlatKeys)}")
+    print(key_signature_group(["D minor", "G minor", "C minor", "F minor", "B♭ minor", "E♭ minor", "A♭ minor"], max_per_row=6))
     print("\nA simple beginner way to learn minor keys is to find the relative major first.\n")
     print("From there, the pattern follows the same relative-major logic: A minor matches C major, D minor matches F major, G minor matches B♭ major, C minor matches E♭ major, and so on.\n")
     print("The major key and minor key share the same accidentals, but they start on different notes.\n")
@@ -1410,22 +1459,88 @@ def normalize_key_name(key_name: str):
         return "F#"
     if text in ["c#", "c##"]:
         return "C#"
-    if text in ["g", "gb", "g#"]:
-        return "G" if text == "g" else ("G♭" if "b" in text else "G")
-    if text in ["d", "db", "d#"]:
-        return "D" if text == "d" else ("D♭" if "b" in text else "D")
-    if text in ["a", "ab", "a#"]:
-        return "A" if text == "a" else ("A♭" if "b" in text else "A")
-    if text in ["e", "eb", "e#"]:
-        return "E" if text == "e" else ("E♭" if "b" in text else "E")
-    if text in ["b", "bb", "b#"]:
-        return "B" if text == "b" else ("B♭" if "b" in text else "B")
-    if text in ["f", "fb", "f#"]:
-        return "F" if text == "f" else ("F" if "b" in text else "F#")
-    if text in ["c", "cb", "c#"]:
-        return "C" if text == "c" else ("C♭" if "b" in text else "C")
+    if text in ["g", "g#", "g##"]:
+        return "G" if text == "g" else "G#"
+    if text in ["d", "d#", "d##"]:
+        return "D" if text == "d" else "D#"
+    if text in ["a", "a#", "a##"]:
+        return "A" if text == "a" else "A#"
+    if text in ["e", "e#", "e##"]:
+        return "E" if text == "e" else "E#"
+    if text in ["b", "b#", "b##"]:
+        return "B" if text == "b" else "B#"
+    if text in ["f", "f#", "f##"]:
+        return "F" if text == "f" else "F#"
+    if text in ["c", "c#", "c##"]:
+        return "C" if text == "c" else "C#"
+    if text in ["gb", "gbb"]:
+        return "G♭"
+    if text in ["db", "dbb"]:
+        return "D♭"
+    if text in ["ab", "abb"]:
+        return "A♭"
+    if text in ["eb", "ebb"]:
+        return "E♭"
+    if text in ["bb", "bbb"]:
+        return "B♭"
+    if text in ["fb", "fbb"]:
+        return "F♭"
+    if text in ["cb", "cbb"]:
+        return "C♭"
 
     return text.upper()
+
+def key_signature_staff(key_name: str, include_label: bool = True):
+    text = key_name.strip().lower()
+    is_minor = "minor" in text or text.endswith("m")
+    normalized_key = normalize_key_name(key_name)
+
+    key_map = minorKeySignatureMap if is_minor else keySignatureMap
+    if normalized_key not in key_map:
+        return f"Unknown key: {key_name}"
+
+    key_details = key_map[normalized_key]
+    accidentals = key_details["accidentals"]
+    key_type = key_details["type"]
+
+    if key_type == "sharp":
+        symbol = "#"
+        positions = [0, 2, 4, 6, 8, 1, 3]
+    elif key_type == "flat":
+        symbol = "b"
+        positions = [4, 2, 0, 6, 3, 1, 5]
+    else:
+        rows = [
+            "  ------------",
+            "              ",
+            "  ------------",
+            "              ",
+            "  ------------",
+            "              ",
+            "  ------------",
+            "              ",
+            "  ------------",
+        ]
+        label = f"Key signature staff for {key_name}:\n" if include_label else ""
+        return label + "\n".join(rows)
+
+    active_positions = positions[:accidentals]
+    rows = []
+    for row in range(9):
+        line = "  " + " " * 14
+        if row in (0, 2, 4, 6, 8):
+            line = "  " + "-" * 14
+
+        for col, pos in enumerate(active_positions):
+            if row == pos:
+                start = 4 + col * 2
+                line = line[:start] + symbol + line[start + 1:]
+
+        rows.append(line)
+
+    label = f"Key signature staff for {key_name}:\n" if include_label else ""
+    return label + "\n".join(rows)
+
 
 # Create function to display a specific key signature and the accidentals used within it
 # This is a practical lookup function for any major or minor key the user might want to check.
@@ -1463,6 +1578,9 @@ def key_signature(key_name: str):
         else:
             print("Key signature: 0 sharps or flats")
 
+        print()
+        print(key_signature_staff(relative_major))
+
         if natural_minor_notes is not None:
             print(f"\nNatural minor scale: {' '.join(natural_minor_notes)}")
             print("Formula: 1 2 b3 4 5 b6 b7")
@@ -1497,6 +1615,9 @@ def key_signature(key_name: str):
         print(f"Key: {normalized_key} major")
         print("Accidentals: no sharps or flats")
 
+    print()
+    print(key_signature_staff(normalized_key))
+
 # Create function to display the mnemonic for a selected order
 # This helps the user remember the sequence for sharps or flats without having to memorise it by raw pattern alone.
 def mnemonic(order_type: str):
@@ -1525,5 +1646,5 @@ __all__ = [
     "bassfret_money_notes", "bassfret_intervals", "bassfret_scale", "bassfret_guide",
     "cello_guide", "songwriting_guide",
     "riff_guide", "bassline_guide", "melody_guide", "genre_analysis_guide", "walking_bassline_guide",
-    "circle_of_fifths", "minor_keys", "natural_minor_scale", "normalize_key_name", "key_signature", "mnemonic"
+    "circle_of_fifths", "minor_keys", "natural_minor_scale", "normalize_key_name", "key_signature_staff", "key_signature", "mnemonic"
 ]
