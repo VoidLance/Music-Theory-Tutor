@@ -1,31 +1,35 @@
 # Musor
 
-## Install from a GitHub release
+## Install from a GitHub release (recommended)
 
-If you want the simplest install path, use the latest GitHub Release instead of following the longer local setup steps:
+The easiest way for most users is to install the published release asset instead of cloning the repository.
 
-1. Open the latest release on GitHub.
-2. Download the package file for your platform from the release assets.
-3. Install it with:
+1. Open the latest GitHub release.
+2. Download the package for your operating system from the release assets.
+3. Install it with pip:
 
 ```bash
 python -m pip install musor-<version>-py3-none-any.whl
 ```
 
-Or, if you prefer to install from the source archive instead of the wheel:
+If you prefer the source archive instead of the wheel:
 
 ```bash
 python -m pip install musor-<version>.tar.gz
 ```
 
-After installation, run:
+Then verify the install and launch the app:
 
 ```bash
 musor --help
 musor quiz
 ```
 
-Quick start for most Linux/macOS users:
+## Install from source or for development
+
+If you want to work on the project locally or run it from a checkout instead of the release package:
+
+### Linux / macOS
 
 ```bash
 git clone https://github.com/VoidLance/Music-Theory-Tutor.git
@@ -41,7 +45,7 @@ Then run:
 musor quiz
 ```
 
-## Windows quick start (recommended for beginners)
+### Windows
 
 If you are on Windows and want the simplest setup, use this exact order:
 
