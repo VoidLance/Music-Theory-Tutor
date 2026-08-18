@@ -2,21 +2,84 @@
 
 ## Install from a GitHub release (recommended)
 
-The easiest way for most users is to install the published release asset instead of cloning the repository.
+The easiest way for most users is to install the published wheel from the release assets.
 
 1. Open the latest GitHub release.
-2. Download the package for your operating system from the release assets.
-3. Install it with pip:
+2. Download the wheel file from the release assets.
+3. Install it with pip.
+
+### Linux / macOS
 
 ```bash
 python -m pip install musor-<version>-py3-none-any.whl
 ```
 
-If you prefer the source archive instead of the wheel:
+### Windows
+
+```powershell
+py -m pip install musor-<version>-py3-none-any.whl
+```
+
+This is the normal install path on all platforms. The wheel is the standard Python package format and is the recommended way to install Musor.
+
+### Source archive fallback (Linux / macOS only)
+
+If you want the source archive instead of the wheel, use the `.tar.gz` file only on Unix-like systems:
 
 ```bash
 python -m pip install musor-<version>.tar.gz
 ```
+
+### Windows source-code option (not the normal install path)
+
+If you want the source code instead of the packaged wheel, Windows users usually do one of these:
+
+- clone the repository with Git, or
+- download the ZIP archive from the GitHub releases page or repository page.
+
+This is a source-access route, not the usual install path. It is useful if you want to inspect the code, run the project directly from a checkout, or install it in editable mode for development.
+
+To use the ZIP file on Windows:
+
+1. Open the GitHub repository page.
+2. Click the Code button.
+3. Choose Download ZIP.
+4. Extract the ZIP to a place you can easily find, such as your Desktop or a folder like `Music-Theory-Tutor`.
+5. Open PowerShell in the extracted folder.
+6. Create a virtual environment and activate it:
+
+```powershell
+cd path\to\Music-Theory-Tutor
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+7. Install the project in editable mode:
+
+```powershell
+python -m pip install --upgrade pip
+python -m pip install -e .
+```
+
+8. Run the app:
+
+```powershell
+musor quiz
+```
+
+If you prefer to use Git instead of the ZIP file, the steps are similar:
+
+```powershell
+git clone https://github.com/VoidLance/Music-Theory-Tutor.git
+cd Music-Theory-Tutor
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -e .
+musor quiz
+```
+
+This route is for source access and development. For normal use, the wheel install above is the simpler and more standard option.
 
 Then verify the install and launch the app:
 
@@ -24,6 +87,48 @@ Then verify the install and launch the app:
 musor --help
 musor quiz
 ```
+
+## Installing on Windows without stress
+
+If you are a beginner or you just want the least-frustrating setup, follow this exact order.
+
+### Windows beginner setup
+
+1. Install Python 3.11 or 3.12 from https://www.python.org/downloads/windows/
+   - Make sure the box that says “Add Python to PATH” is checked.
+2. Install Git from https://git-scm.com/download/win
+3. Open PowerShell.
+4. Run these commands exactly as written:
+
+```powershell
+git clone https://github.com/VoidLance/Music-Theory-Tutor.git
+cd Music-Theory-Tutor
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -e .
+musor quiz
+```
+
+If PowerShell blocks scripts, run this once and then try again:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+
+If you prefer Command Prompt instead, this also works:
+
+```cmd
+git clone https://github.com/VoidLance/Music-Theory-Tutor.git
+cd Music-Theory-Tutor
+py -m venv .venv
+.venv\Scripts\activate.bat
+python -m pip install --upgrade pip
+python -m pip install -e .
+musor quiz
+```
+
+If the `musor` command is not found, close the terminal, reopen it, and try again. Windows sometimes needs a fresh terminal before new scripts appear in PATH.
 
 ## Install from source or for development
 
@@ -45,45 +150,35 @@ Then run:
 musor quiz
 ```
 
-### Windows
-
-If you are on Windows and want the simplest setup, use this exact order:
-
-1. Install Python 3.11 or 3.12 from https://www.python.org/downloads/windows/
-   - Make sure the installer box for “Add Python to PATH” is checked.
-2. Install Git from https://git-scm.com/download/win
-3. Open PowerShell or Command Prompt.
-4. Run these commands:
+### Windows (development)
 
 ```powershell
 git clone https://github.com/VoidLance/Music-Theory-Tutor.git
 cd Music-Theory-Tutor
 py -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
 python -m pip install -e .
 musor quiz
 ```
 
-If PowerShell says script execution is blocked, run this once and then try the activation step again:
+### Fish shell users
 
-```powershell
-Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
-```
-
-If you prefer Command Prompt instead of PowerShell, this works too:
-
-```cmd
+```fish
 git clone https://github.com/VoidLance/Music-Theory-Tutor.git
 cd Music-Theory-Tutor
-py -m venv .venv
-.venv\Scripts\activate.bat
-python -m pip install --upgrade pip
+python3 -m venv .venv
+source .venv/bin/activate.fish
 python -m pip install -e .
 musor quiz
 ```
 
-If the command `musor` is not found after install, close and reopen the terminal, then try again. Sometimes Windows needs a fresh terminal before the new entry point appears.
+## One-line install summary
+
+- Linux / macOS release install: `python -m pip install musor-<version>-py3-none-any.whl`
+- Windows release install: `py -m pip install musor-<version>-py3-none-any.whl`
+- Linux / macOS source archive fallback: `python -m pip install musor-<version>.tar.gz`
+- Development install: `python -m pip install -e .`
+- Run app: `musor quiz`
 
 Musor is a terminal-based music theory learning app built for practical understanding, not just reference lookup.
 
