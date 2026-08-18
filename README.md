@@ -1,5 +1,30 @@
 # Musor
 
+## Install from a GitHub release
+
+If you want the simplest install path, use the latest GitHub Release instead of following the longer local setup steps:
+
+1. Open the latest release on GitHub.
+2. Download the package file for your platform from the release assets.
+3. Install it with:
+
+```bash
+python -m pip install musor-<version>-py3-none-any.whl
+```
+
+Or, if you prefer to install from the source archive instead of the wheel:
+
+```bash
+python -m pip install musor-<version>.tar.gz
+```
+
+After installation, run:
+
+```bash
+musor --help
+musor quiz
+```
+
 Quick start for most Linux/macOS users:
 
 ```bash

@@ -8,7 +8,20 @@ version = "0.1.0"
 description = "A terminal-based music theory companion for key signatures, relative keys, and broader study."
 readme = "README.md"
 requires-python = ">=3.9"
-authors = [{ name = "Your Name" }]
+authors = [{ name = "VoidLance" }]
+license = "MIT"
+keywords = ["music", "theory", "education", "cli", "quiz"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+]
+
+[project.urls]
+Homepage = "https://github.com/VoidLance/Music-Theory-Tutor"
+Repository = "https://github.com/VoidLance/Music-Theory-Tutor"
+Issues = "https://github.com/VoidLance/Music-Theory-Tutor/issues"
 
 [project.scripts]
 musor = "musor.cli:main_entry"
