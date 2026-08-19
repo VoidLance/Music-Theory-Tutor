@@ -26,6 +26,6 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e .
 
-      - name: Run CLI smoke check
+      - name: Run tests
         run: |
-          musor --help
+          python -m unittest discover -s tests -v
